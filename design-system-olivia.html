@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olívia — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ========== COLORS · BRAND ========== */
+  --color-primary:#082B60;        /* Azul Principal */
+  --color-electric:#123BEE;       /* Azul Elétrico */
+  --color-cyan:#25C5D9;           /* Ciano */
+  --color-green:#20C997;          /* Verde Olívia */
+  --color-soft:#BBD1FF;           /* Azul Suave */
+  --color-ice:#F5F8FC;            /* Branco Gelo */
+
+  /* ========== COLORS · SCALES ========== */
+  --blue-50:#EEF3FF; --blue-100:#DCE6FF; --blue-200:#BBD1FF; --blue-300:#8FB0FF; --blue-400:#5A82F7;
+  --blue-500:#123BEE; --blue-600:#0E2FC4; --blue-700:#0B2496; --blue-800:#0A2A78; --blue-900:#082B60; --blue-950:#051A3D;
+  --green-50:#E8FAF3; --green-100:#C6F3E0; --green-300:#6FE0B5; --green-400:#3DD9A4; --green-500:#20C997; --green-600:#17A57B; --green-700:#11805F;
+  --cyan-50:#E6F9FB; --cyan-300:#7EDDE9; --cyan-500:#25C5D9; --cyan-600:#1AA3B5;
+
+  /* ========== COLORS · SEMANTIC ========== */
+  --color-bg:#F5F8FC;
+  --color-surface:#FFFFFF;
+  --color-surface-tint:#EEF3FF;
+  --color-text:#0A1F44;
+  --color-text-muted:#5B6B86;
+  --color-text-inverse:#FFFFFF;
+  --color-border:#E3EAF5;
+  --color-accent:var(--color-green);
+  --color-on-accent:var(--color-primary);
+  --color-success:#20C997;
+  --color-warning:#F5A524;
+  --color-error:#EF4444;
+  --color-info:#123BEE;
+  --color-chat-in:#FFFFFF;
+  --color-chat-out:#DCF8C6;
+  --color-chat-bg:#EFEAE2;
+
+  /* ========== GRADIENTS ========== */
+  --gradient-brand:linear-gradient(135deg,#25C5D9 0%,#20C997 60%,#3DE08A 100%);
+  --gradient-electric:linear-gradient(90deg,#123BEE 0%,#25C5D9 100%);
+  --gradient-fresh:linear-gradient(90deg,#25C5D9 0%,#3DE08A 100%);
+  --gradient-soft:linear-gradient(90deg,#F5F8FC 0%,#BBD1FF 100%);
+  --gradient-hero:linear-gradient(120deg,#051A3D 0%,#082B60 40%,#123BEE 100%);
+
+  /* ========== TYPOGRAPHY ========== */
+  --font-sans:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --fw-light:300; --fw-regular:400; --fw-medium:500; --fw-semibold:600; --fw-bold:700;
+  --fs-display:56px; --fs-h1:40px; --fs-h2:32px; --fs-h3:24px; --fs-h4:20px;
+  --fs-body-lg:18px; --fs-body:16px; --fs-small:14px; --fs-caption:12px; --fs-overline:11px;
+  --lh-tight:1.1; --lh-snug:1.25; --lh-base:1.6;
+  --ls-tight:-0.02em; --ls-wide:0.18em;
+
+  /* ========== SPACING (base 4px) ========== */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px;
+  --space-8:32px; --space-10:40px; --space-12:48px; --space-16:64px; --space-20:80px; --space-24:96px;
+
+  /* ========== RADIUS ========== */
+  --radius-xs:6px; --radius-sm:10px; --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:40px; --radius-pill:999px;
+
+  /* ========== SHADOWS ========== */
+  --shadow-xs:0 1px 2px rgba(8,43,96,.06);
+  --shadow-sm:0 2px 8px rgba(8,43,96,.06),0 1px 2px rgba(8,43,96,.04);
+  --shadow-md:0 8px 24px rgba(8,43,96,.08),0 2px 6px rgba(8,43,96,.05);
+  --shadow-lg:0 20px 48px rgba(8,43,96,.14),0 6px 14px rgba(8,43,96,.06);
+  --shadow-glow:0 8px 28px rgba(32,201,151,.40);
+  --shadow-glow-blue:0 8px 28px rgba(18,59,238,.35);
+
+  /* ========== MOTION ========== */
+  --ease-out:cubic-bezier(.2,.8,.2,1);
+  --dur-fast:150ms; --dur-base:250ms;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text);line-height:var(--lh-base);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* ---------- Logo ---------- */
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.03em;color:var(--color-primary)}
+.logo svg{flex:none}
+.logo .dot{color:var(--color-green)}
+.logo.inverse{color:#fff}
+
+/* ---------- Top nav ---------- */
+.topnav{position:sticky;top:0;z-index:50;padding:14px 24px;background:rgba(245,248,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border)}
+.topnav-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:32px}
+.topnav .logo{font-size:24px}
+.topnav nav{display:flex;gap:24px;margin-left:auto;font-size:14px;font-weight:500}
+.topnav nav a{color:var(--color-text);opacity:.8;transition:opacity var(--dur-fast)}
+.topnav nav a:hover{opacity:1;color:var(--color-electric)}
+.tag-version{font-size:11px;font-weight:600;padding:4px 10px;border-radius:var(--radius-pill);background:var(--blue-50);color:var(--color-electric)}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-weight:600;font-size:15px;line-height:1;padding:14px 26px;border-radius:var(--radius-pill);border:1.5px solid transparent;cursor:pointer;transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base),background var(--dur-base)}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--color-green);color:var(--color-primary);box-shadow:var(--shadow-glow)}
+.btn-primary:hover{background:var(--green-400)}
+.btn-electric{background:var(--color-electric);color:#fff;box-shadow:var(--shadow-glow-blue)}
+.btn-electric:hover{background:var(--blue-600)}
+.btn-outline{background:transparent;border-color:var(--color-primary);color:var(--color-primary)}
+.btn-outline:hover{background:var(--blue-50)}
+.btn-ghost-inverse{background:transparent;border-color:rgba(255,255,255,.8);color:#fff}
+.btn-ghost-inverse:hover{background:rgba(255,255,255,.08)}
+.btn-sm{padding:9px 18px;font-size:13px}
+.btn-lg{padding:18px 32px;font-size:16px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;gap:48px;padding:0 24px}
+.sidebar{position:sticky;top:90px;align-self:start;padding:32px 0;font-size:14px}
+.sidebar p{font-size:11px;font-weight:600;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--color-text-muted);margin-bottom:14px}
+.sidebar a{display:flex;gap:12px;padding:8px 12px;border-radius:var(--radius-sm);color:var(--color-text-muted);font-weight:500;transition:all var(--dur-fast)}
+.sidebar a span{font-family:var(--font-mono);font-size:12px;color:var(--color-electric);opacity:.7}
+.sidebar a:hover{background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-xs)}
+main{padding:32px 0 96px;min-width:0}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-radius:var(--radius-xl);background:var(--gradient-hero);color:#fff;padding:72px 64px;margin-bottom:64px;isolation:isolate}
+.hero::before{content:"";position:absolute;right:-120px;bottom:-160px;width:520px;height:520px;border-radius:50%;background:var(--gradient-fresh);opacity:.9;z-index:-1;filter:blur(2px)}
+.hero::after{content:"";position:absolute;left:-90px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(37,197,217,.35),transparent 70%);z-index:-1}
+.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+.hero .logo{font-size:72px;gap:18px}
+.hero .tagline{font-size:12px;letter-spacing:.32em;text-transform:uppercase;margin-top:10px;opacity:.85;padding-left:4px}
+.hero h1{font-size:40px;line-height:1.1;letter-spacing:var(--ls-tight);font-weight:700}
+.hero p{margin-top:16px;font-size:17px;opacity:.9;max-width:440px}
+.hero .meta{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:7px 14px;border-radius:var(--radius-pill);border:1.5px solid currentColor}
+.hero .chip{border-color:rgba(255,255,255,.5);color:#fff}
+
+/* ---------- Sections ---------- */
+section{margin-bottom:88px;scroll-margin-top:96px}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+.sec-num{font-family:var(--font-mono);font-size:14px;color:var(--color-electric);font-weight:500}
+.sec-head h2{font-size:32px;font-weight:700;letter-spacing:var(--ls-tight);color:var(--color-primary)}
+.sec-lead{color:var(--color-text-muted);max-width:720px;margin-bottom:32px}
+h3.sub{font-size:18px;font-weight:600;color:var(--color-primary);margin:40px 0 16px}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-sm)}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g6{grid-template-columns:repeat(6,1fr)}
+
+/* ---------- Code ---------- */
+.code{position:relative;margin-top:20px;background:var(--blue-950);border-radius:var(--radius-md);overflow:hidden}
+.code-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.08);font-family:var(--font-mono);font-size:12px;color:var(--color-soft)}
+.copy{font-family:var(--font-sans);font-size:11px;font-weight:700;letter-spacing:.1em;padding:6px 14px;border-radius:var(--radius-pill);border:none;background:var(--color-green);color:var(--color-primary);cursor:pointer;transition:background var(--dur-fast)}
+.copy:hover{background:var(--green-400)}
+.copy.ok{background:#fff}
+pre{padding:18px 20px;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.7;color:#E6EEFF}
+pre .c{color:#6F86B8}pre .k{color:#7EDDE9}pre .v{color:#6FE0B5}
+
+/* ---------- Brand / Symbol ---------- */
+.construct{display:flex;align-items:center;justify-content:space-around;gap:16px;flex-wrap:wrap;padding:12px 0}
+.construct .item{text-align:center;font-size:13px;color:var(--color-text-muted)}
+.construct .item b{display:block;color:var(--color-text);font-weight:600}
+.construct .op{font-size:28px;color:var(--color-text-muted);font-weight:300}
+.variation{border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;height:150px;font-size:36px}
+.v-light{background:#fff;border:1px solid var(--color-border)}
+.v-dark{background:var(--color-primary)}
+.v-grad{background:linear-gradient(135deg,#1AA3B5,#25C5D9 50%,#3DE08A)}
+.rules li{list-style:none;display:flex;gap:10px;font-size:14px;padding:8px 0;border-bottom:1px dashed var(--color-border)}
+.rules li:last-child{border:none}
+.rules .y{color:var(--color-green);font-weight:700}.rules .n{color:var(--color-error);font-weight:700}
+
+/* ---------- Colors ---------- */
+.swatch{border-radius:var(--radius-lg);overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);box-shadow:var(--shadow-sm);cursor:pointer;transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base)}
+.swatch:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.swatch .chipc{height:130px;display:flex;align-items:flex-end;padding:16px;font-weight:600;font-size:14px}
+.swatch .info{padding:14px 16px;font-size:13px}
+.swatch .info b{display:block;font-weight:600;color:var(--color-primary)}
+.swatch .info code{font-family:var(--font-mono);font-size:12px;color:var(--color-text-muted)}
+.swatch .role{display:inline-block;margin-top:6px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--radius-pill);background:var(--blue-50);color:var(--color-electric)}
+.strip{display:flex;border-radius:var(--radius-md);overflow:hidden;height:72px;box-shadow:var(--shadow-sm)}
+.strip div{flex:1;display:flex;align-items:flex-end;padding:8px;font-family:var(--font-mono);font-size:10px;font-weight:500}
+.grad-bar{height:64px;border-radius:var(--radius-pill);box-shadow:var(--shadow-sm)}
+.grad-label{display:flex;justify-content:space-between;font-size:13px;margin-top:10px}
+.grad-label b{color:var(--color-primary);font-weight:600}
+.grad-label code{font-family:var(--font-mono);font-size:12px;color:var(--color-text-muted)}
+.contrast{width:100%;border-collapse:collapse;font-size:14px}
+.contrast td,.contrast th{padding:12px 14px;border-bottom:1px solid var(--color-border);text-align:left}
+.contrast th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);font-weight:600}
+.pill-pass{font-size:11px;font-weight:700;padding:3px 9px;border-radius:var(--radius-pill);background:var(--green-50);color:var(--green-700)}
+.pill-warn{font-size:11px;font-weight:700;padding:3px 9px;border-radius:var(--radius-pill);background:#FFF5E0;color:#A86B00}
+
+/* ---------- Typography ---------- */
+.type-hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.type-hero .big{font-size:96px;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--color-primary)}
+.weights{font-size:15px;line-height:1.9;text-align:right}
+.type-row{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--color-border)}
+.type-row:last-child{border:none}
+.type-row .lbl{font-size:12px;color:var(--color-text-muted)}
+.type-row .lbl b{display:block;color:var(--color-electric);font-weight:600;font-size:13px}
+.overline{font-size:12px;font-weight:600;color:var(--color-electric);margin-bottom:4px}
+
+/* ---------- Spacing / Radius / Shadow ---------- */
+.space-row{display:flex;align-items:center;gap:20px;padding:8px 0;font-size:13px}
+.space-row code{font-family:var(--font-mono);width:110px;color:var(--color-text-muted)}
+.space-row .bar{height:16px;border-radius:4px;background:var(--gradient-electric)}
+.space-row span{color:var(--color-text-muted);font-family:var(--font-mono);font-size:12px}
+.rad-box{height:110px;background:var(--gradient-soft);border:2px solid var(--color-electric);margin-bottom:12px}
+.tile-label{text-align:center;font-size:13px}
+.tile-label b{display:block;color:var(--color-primary);font-weight:600}
+.tile-label code{font-family:var(--font-mono);font-size:12px;color:var(--color-text-muted)}
+.shadow-box{height:120px;border-radius:var(--radius-lg);background:#fff;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--color-primary)}
+
+/* ---------- Icons ---------- */
+.icon-tile{aspect-ratio:1;border-radius:var(--radius-md);background:var(--blue-50);display:flex;align-items:center;justify-content:center;color:var(--color-electric);transition:all var(--dur-base)}
+.icon-tile:hover{background:var(--color-electric);color:#fff;transform:translateY(-2px);box-shadow:var(--shadow-glow-blue)}
+.icon-tile.green{background:var(--green-50);color:var(--green-600)}
+.icon-tile.green:hover{background:var(--color-green);color:var(--color-primary);box-shadow:var(--shadow-glow)}
+.icon-cell{text-align:center;font-size:12px;color:var(--color-text-muted)}
+.icon-cell .icon-tile{margin-bottom:8px}
+.icon-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+.icon-specs div{background:var(--color-ice);border-radius:var(--radius-md);padding:14px;font-size:13px}
+.icon-specs b{display:block;color:var(--color-primary);font-weight:600;font-size:15px}
+
+/* ---------- Components ---------- */
+.comp-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.dark-stage{background:var(--gradient-hero);border-radius:var(--radius-lg);padding:28px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:var(--radius-pill)}
+.badge .d{width:7px;height:7px;border-radius:50%;background:currentColor}
+.b-online{background:var(--green-50);color:var(--green-700)}
+.b-online .d{box-shadow:0 0 0 3px rgba(32,201,151,.25);animation:pulse 1.6s infinite}
+.b-proc{background:var(--blue-50);color:var(--color-electric)}
+.b-warn{background:#FFF5E0;color:#A86B00}
+.b-err{background:#FDECEC;color:#C02626}
+.b-outline{border:1.5px solid var(--color-primary);color:var(--color-primary)}
+.b-new{background:var(--gradient-brand);color:var(--color-primary)}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(32,201,151,0)}}
+.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500;color:var(--color-primary)}
+.input{font-family:inherit;font-size:15px;padding:13px 16px;border-radius:var(--radius-md);border:1.5px solid var(--color-border);background:#fff;color:var(--color-text);outline:none;transition:border-color var(--dur-fast),box-shadow var(--dur-fast)}
+.input:focus{border-color:var(--color-electric);box-shadow:0 0 0 4px rgba(18,59,238,.12)}
+.input.err{border-color:var(--color-error)}
+.hint{font-size:12px;font-weight:400;color:var(--color-text-muted)}
+.hint.err{color:var(--color-error)}
+
+/* Site nav mock */
+.mock-nav{display:flex;align-items:center;gap:28px;background:#fff;border-radius:var(--radius-lg);padding:14px 22px;box-shadow:var(--shadow-md)}
+.mock-nav .logo{font-size:24px}
+.mock-nav .links{display:flex;gap:24px;font-size:13px;font-weight:500;margin-left:auto}
+.mock-nav .acts{display:flex;gap:10px}
+
+/* Feature list (dark card) */
+.feature-card{background:linear-gradient(160deg,#082B60,#0B2496 70%,#123BEE);border-radius:var(--radius-xl);padding:28px;color:#fff;position:relative;overflow:hidden}
+.feature-card::after{content:"";position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;background:var(--gradient-fresh);opacity:.85}
+.feature{display:flex;gap:18px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.15);position:relative;z-index:1}
+.feature:last-child{border:none}
+.feature .ic{width:60px;height:60px;flex:none;border-radius:var(--radius-md);background:linear-gradient(140deg,#1AA3B5,#0E2FC4);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.feature h4{font-size:19px;font-weight:600}
+.feature p{font-size:13px;opacity:.85}
+
+/* Chat */
+.phone{background:var(--color-chat-bg);border-radius:var(--radius-xl);border:8px solid var(--blue-950);overflow:hidden;max-width:380px;box-shadow:var(--shadow-lg)}
+.phone-head{display:flex;align-items:center;gap:12px;background:#fff;padding:12px 16px;border-bottom:1px solid var(--color-border)}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--color-primary);display:flex;align-items:center;justify-content:center}
+.phone-head b{display:block;font-size:15px;color:var(--color-primary)}
+.phone-head small{font-size:11px;color:var(--color-text-muted)}
+.chat{padding:16px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+.msg{max-width:78%;padding:10px 12px 18px;border-radius:12px;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.06);line-height:1.45}
+.msg time{position:absolute;right:10px;bottom:4px;font-size:10px;color:var(--color-text-muted)}
+.msg.in{background:var(--color-chat-in);align-self:flex-start;border-top-left-radius:4px}
+.msg.out{background:var(--color-chat-out);align-self:flex-end;border-top-right-radius:4px}
+.typing{align-self:flex-start;background:#fff;border-radius:12px;padding:10px 14px;display:flex;gap:4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--color-cyan);animation:bounce 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.composer{display:flex;gap:10px;align-items:center;background:#fff;padding:10px 12px}
+.composer .input{flex:1;border-radius:var(--radius-pill);padding:10px 16px;font-size:13px}
+.mic{width:42px;height:42px;border-radius:50%;background:var(--color-green);display:flex;align-items:center;justify-content:center;flex:none}
+
+/* Pricing / stat cards */
+.stat{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:22px}
+.stat small{font-size:12px;color:var(--color-text-muted);font-weight:500}
+.stat .n{font-size:36px;font-weight:700;color:var(--color-primary);letter-spacing:-.02em;line-height:1.2}
+.stat .delta{font-size:12px;font-weight:600;color:var(--green-700)}
+.plan{background:#fff;border:1.5px solid var(--color-border);border-radius:var(--radius-xl);padding:28px;display:flex;flex-direction:column;gap:14px}
+.plan.featured{border-color:var(--color-green);box-shadow:var(--shadow-glow);position:relative}
+.plan h4{font-size:18px;font-weight:600;color:var(--color-primary)}
+.plan .price{font-size:40px;font-weight:700;color:var(--color-primary);letter-spacing:-.02em}
+.plan .price small{font-size:14px;font-weight:400;color:var(--color-text-muted)}
+.plan ul{list-style:none;font-size:14px;display:flex;flex-direction:column;gap:8px;color:var(--color-text-muted)}
+.plan li::before{content:"✓";color:var(--color-green);font-weight:700;margin-right:8px}
+
+/* Support shapes */
+.shapes{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.sh{width:110px;height:110px}
+.sh-leaf{background:var(--gradient-brand);border-radius:0 70px 0 70px}
+.sh-drop{background:var(--color-soft);border-radius:60px 60px 60px 0}
+.sh-quarter{background:var(--color-primary);border-radius:0 0 0 110px}
+.sh-outline{border:3px solid var(--color-green);border-radius:110px 0 0 0;background:transparent}
+.sh-bubble{background:var(--gradient-electric);border-radius:60px 60px 60px 10px}
+
+/* Do / Don't */
+.dd{border-radius:var(--radius-lg);padding:20px;font-size:14px}
+.dd.do{background:var(--green-50);border:1px solid var(--green-100)}
+.dd.dont{background:#FDECEC;border:1px solid #F8CACA}
+.dd h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.dd.do h4{color:var(--green-700)}.dd.dont h4{color:#C02626}
+.dd ul{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+
+footer{border-top:1px solid var(--color-border);padding:32px 24px;text-align:center;font-size:13px;color:var(--color-text-muted)}
+
+@media (max-width:1000px){
+  .wrap{grid-template-columns:1fr}.sidebar{display:none}
+  .g3,.g4,.g6{grid-template-columns:repeat(2,1fr)}.hero-grid,.g2{grid-template-columns:1fr}
+  .hero{padding:48px 28px}.hero .logo{font-size:52px}.topnav nav{display:none}
+  .type-hero .big{font-size:64px}.type-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gBrand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#25C5D9"/><stop offset=".6" stop-color="#20C997"/><stop offset="1" stop-color="#3DE08A"/>
+    </linearGradient>
+    <symbol id="olivia-mark" viewBox="0 0 100 100">
+      <path fill="url(#gBrand)" fill-rule="evenodd" d="M50 6C76 6 94 24 94 50S76 94 50 94H16C10.5 94 6 89.5 6 84V50C6 24 24 6 50 6ZM50 28C37 28 28 37 28 50V68C28 70.2 29.8 72 32 72H50C63 72 72 63 72 50S63 28 50 28Z"/>
+    </symbol>
+    <symbol id="olivia-mark-white" viewBox="0 0 100 100">
+      <path fill="#fff" fill-rule="evenodd" d="M50 6C76 6 94 24 94 50S76 94 50 94H16C10.5 94 6 89.5 6 84V50C6 24 24 6 50 6ZM50 28C37 28 28 37 28 50V68C28 70.2 29.8 72 32 72H50C63 72 72 63 72 50S63 28 50 28Z"/>
+    </symbol>
+    <!-- icons (stroke 2, round) -->
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 20.5l1.6-4.6A8.4 8.4 0 1 1 21 11.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/></g></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.5L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></g></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 20v-4M10 20v-8M15 20v-11M20 20V5"/></g></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></g></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12.6 2.6 21 11a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6Z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/></g></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5M2 17l10 5 10-5"/></g></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5-12-7.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<!-- TOP NAV -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#" class="logo"><svg width="30" height="30"><use href="#olivia-mark"/></svg><span>olívia<span class="dot">.</span></span></a>
+    <span class="tag-version">Design System v1.0</span>
+    <nav>
+      <a href="#marca">Marca</a><a href="#cores">Cores</a><a href="#tipografia">Tipografia</a><a href="#componentes">Componentes</a><a href="#tokens">Tokens</a>
+    </nav>
+    <a href="#tokens" class="btn btn-primary btn-sm">Baixar tokens</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <p>Conteúdo</p>
+    <a href="#marca"><span>01</span>Marca</a>
+    <a href="#cores"><span>02</span>Cores</a>
+    <a href="#gradientes"><span>03</span>Gradientes</a>
+    <a href="#tipografia"><span>04</span>Tipografia</a>
+    <a href="#espacamento"><span>05</span>Espaçamento</a>
+    <a href="#raios"><span>06</span>Raios</a>
+    <a href="#sombras"><span>07</span>Sombras</a>
+    <a href="#icones"><span>08</span>Ícones</a>
+    <a href="#componentes"><span>09</span>Componentes</a>
+    <a href="#apoio"><span>10</span>Elementos de apoio</a>
+    <a href="#voz"><span>11</span>Tom de voz</a>
+    <a href="#tokens"><span>12</span>Tokens</a>
+    <a href="#quickstart"><span>13</span>Quick Start</a>
+  </aside>
+
+  <main>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="logo inverse"><svg width="96" height="96"><use href="#olivia-mark"/></svg><span>olívia<span class="dot">.</span></span></div>
+          <div class="tagline">Assistente de IA para atendimento e vendas</div>
+        </div>
+        <div>
+          <h1>Inteligência que conversa. Tecnologia que vende.</h1>
+          <p>O guia oficial da identidade visual da Olívia: cores, tipografia, componentes e tokens prontos para site, app, redes sociais e materiais de marketing.</p>
+          <div class="meta">
+            <span class="chip">Poppins</span><span class="chip">6 cores-base</span><span class="chip">Base 4px</span><span class="chip">WCAG AA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 01 MARCA -->
+    <section id="marca">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Marca</h2></div>
+      <p class="sec-lead">O símbolo une a letra <b>O</b> de Olívia, o balão de conversa (atendimento) e a folha de crescimento (vendas) numa única forma. O ponto verde do logotipo é a assinatura da marca e nunca deve ser removido.</p>
+
+      <div class="card">
+        <div class="construct">
+          <div class="item"><svg width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="26" fill="none" stroke="#8FB0FF" stroke-width="12"/></svg><b>Letra O</b>Olívia</div>
+          <span class="op">+</span>
+          <div class="item"><svg width="72" height="72" style="color:#8FB0FF"><use href="#i-chat"/></svg><b>Conversa</b>atendimento</div>
+          <span class="op">+</span>
+          <div class="item"><svg width="72" height="72" viewBox="0 0 72 72"><path d="M12 60C12 30 32 12 62 12 62 42 42 60 12 60Z" fill="#8FB0FF"/></svg><b>Crescimento</b>vendas</div>
+          <span class="op">=</span>
+          <div class="item"><svg width="96" height="96"><use href="#olivia-mark"/></svg><b>Símbolo</b>Olívia</div>
+        </div>
+      </div>
+
+      <h3 class="sub">Variações</h3>
+      <div class="grid g3">
+        <div class="variation v-light"><span class="logo"><svg width="44" height="44"><use href="#olivia-mark"/></svg><span>olívia<span class="dot">.</span></span></span></div>
+        <div class="variation v-dark"><span class="logo inverse"><svg width="44" height="44"><use href="#olivia-mark"/></svg><span>olívia<span class="dot">.</span></span></span></div>
+        <div class="variation v-grad"><span class="logo inverse"><svg width="44" height="44"><use href="#olivia-mark-white"/></svg><span>olívia<span class="dot" style="color:#fff">.</span></span></span></div>
+      </div>
+
+      <div class="grid g2" style="margin-top:20px">
+        <div class="card">
+          <h3 class="sub" style="margin-top:0">Área de proteção e tamanho mínimo</h3>
+          <ul class="rules">
+            <li><span class="y">→</span>Área de respiro = altura do miolo do símbolo (≈ 44% da altura total) em todos os lados.</li>
+            <li><span class="y">→</span>Mínimo digital: símbolo 24px · logotipo completo 96px de largura.</li>
+            <li><span class="y">→</span>Mínimo impresso: logotipo completo 25mm de largura.</li>
+            <li><span class="y">→</span>Avatar / app icon: símbolo sobre Azul Principal com cantos de 22%.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="sub" style="margin-top:0">Usos incorretos</h3>
+          <ul class="rules">
+            <li><span class="n">✕</span>Distorcer, rotacionar ou trocar a fonte do logotipo.</li>
+            <li><span class="n">✕</span>Remover o ponto verde ou trocar sua cor.</li>
+            <li><span class="n">✕</span>Aplicar o gradiente do símbolo sobre fundos ciano/verde (use a versão branca).</li>
+            <li><span class="n">✕</span>Adicionar sombras, contornos ou efeitos 3D ao símbolo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 CORES -->
+    <section id="cores">
+      <div class="sec-head"><span class="sec-num">02</span><h2>Cores</h2></div>
+      <p class="sec-lead">Seis cores-base: dois azuis que trazem confiança e tecnologia, ciano e verde que comunicam conversa e crescimento, e dois neutros claros para dar respiro. Clique numa cor para copiar o HEX.</p>
+
+      <div class="grid g3">
+        <div class="swatch" data-copy="#082B60"><div class="chipc" style="background:#082B60;color:#fff">Aa</div><div class="info"><b>Azul Principal</b><code>#082B60 · rgb(8,43,96)</code><br><span class="role">Primária · fundos escuros · títulos</span></div></div>
+        <div class="swatch" data-copy="#123BEE"><div class="chipc" style="background:#123BEE;color:#fff">Aa</div><div class="info"><b>Azul Elétrico</b><code>#123BEE · rgb(18,59,238)</code><br><span class="role">Interação · links · destaques</span></div></div>
+        <div class="swatch" data-copy="#25C5D9"><div class="chipc" style="background:#25C5D9;color:#082B60">Aa</div><div class="info"><b>Ciano</b><code>#25C5D9 · rgb(37,197,217)</code><br><span class="role">Gradientes · ícones · apoio</span></div></div>
+        <div class="swatch" data-copy="#20C997"><div class="chipc" style="background:#20C997;color:#082B60">Aa</div><div class="info"><b>Verde Olívia</b><code>#20C997 · rgb(32,201,151)</code><br><span class="role">Accent · CTA · sucesso</span></div></div>
+        <div class="swatch" data-copy="#BBD1FF"><div class="chipc" style="background:#BBD1FF;color:#082B60">Aa</div><div class="info"><b>Azul Suave</b><code>#BBD1FF · rgb(187,209,255)</code><br><span class="role">Superfícies · ilustração</span></div></div>
+        <div class="swatch" data-copy="#F5F8FC"><div class="chipc" style="background:#F5F8FC;color:#082B60;border-bottom:1px solid #E3EAF5">Aa</div><div class="info"><b>Branco Gelo</b><code>#F5F8FC · rgb(245,248,252)</code><br><span class="role">Background · respiro</span></div></div>
+      </div>
+
+      <h3 class="sub">Escala Azul</h3>
+      <div class="strip">
+        <div style="background:#EEF3FF;color:#082B60">50</div><div style="background:#DCE6FF;color:#082B60">100</div><div style="background:#BBD1FF;color:#082B60">200</div><div style="background:#8FB0FF;color:#082B60">300</div><div style="background:#5A82F7;color:#fff">400</div><div style="background:#123BEE;color:#fff">500</div><div style="background:#0E2FC4;color:#fff">600</div><div style="background:#0B2496;color:#fff">700</div><div style="background:#0A2A78;color:#fff">800</div><div style="background:#082B60;color:#fff">900</div><div style="background:#051A3D;color:#fff">950</div>
+      </div>
+      <h3 class="sub">Escala Accent (Ciano → Verde)</h3>
+      <div class="strip">
+        <div style="background:#E6F9FB;color:#082B60">cyan 50</div><div style="background:#7EDDE9;color:#082B60">cyan 300</div><div style="background:#25C5D9;color:#082B60">cyan 500</div><div style="background:#1AA3B5;color:#fff">cyan 600</div><div style="background:#E8FAF3;color:#082B60">green 50</div><div style="background:#C6F3E0;color:#082B60">green 100</div><div style="background:#6FE0B5;color:#082B60">green 300</div><div style="background:#20C997;color:#082B60">green 500</div><div style="background:#17A57B;color:#fff">green 600</div><div style="background:#11805F;color:#fff">green 700</div>
+      </div>
+
+      <h3 class="sub">Cores de status e texto</h3>
+      <div class="grid g6">
+        <div class="swatch" data-copy="#0A1F44"><div class="chipc" style="height:70px;background:#0A1F44"></div><div class="info"><b>Texto</b><code>#0A1F44</code></div></div>
+        <div class="swatch" data-copy="#5B6B86"><div class="chipc" style="height:70px;background:#5B6B86"></div><div class="info"><b>Texto suave</b><code>#5B6B86</code></div></div>
+        <div class="swatch" data-copy="#E3EAF5"><div class="chipc" style="height:70px;background:#E3EAF5"></div><div class="info"><b>Borda</b><code>#E3EAF5</code></div></div>
+        <div class="swatch" data-copy="#20C997"><div class="chipc" style="height:70px;background:#20C997"></div><div class="info"><b>Sucesso</b><code>#20C997</code></div></div>
+        <div class="swatch" data-copy="#F5A524"><div class="chipc" style="height:70px;background:#F5A524"></div><div class="info"><b>Alerta</b><code>#F5A524</code></div></div>
+        <div class="swatch" data-copy="#EF4444"><div class="chipc" style="height:70px;background:#EF4444"></div><div class="info"><b>Erro</b><code>#EF4444</code></div></div>
+      </div>
+
+      <h3 class="sub">Proporção de uso</h3>
+      <div class="strip" style="height:48px">
+        <div style="flex:40;background:#F5F8FC;color:#082B60;font-family:var(--font-sans);font-size:12px">Branco Gelo 40%</div>
+        <div style="flex:25;background:#082B60;color:#fff;font-family:var(--font-sans);font-size:12px">Azul Principal 25%</div>
+        <div style="flex:15;background:#123BEE;color:#fff;font-family:var(--font-sans);font-size:12px">Elétrico 15%</div>
+        <div style="flex:10;background:#BBD1FF;color:#082B60;font-family:var(--font-sans);font-size:12px">Suave 10%</div>
+        <div style="flex:6;background:#20C997;color:#082B60;font-family:var(--font-sans);font-size:12px">Verde</div>
+        <div style="flex:4;background:#25C5D9"></div>
+      </div>
+
+      <h3 class="sub">Contraste (WCAG 2.1)</h3>
+      <div class="card" style="padding:8px 20px">
+        <table class="contrast">
+          <tr><th>Combinação</th><th>Amostra</th><th>Razão</th><th>Uso</th></tr>
+          <tr><td>Branco sobre Azul Principal</td><td><span style="background:#082B60;color:#fff;padding:4px 10px;border-radius:6px">Olívia</span></td><td>13.8 : 1</td><td><span class="pill-pass">AAA</span></td></tr>
+          <tr><td>Branco sobre Azul Elétrico</td><td><span style="background:#123BEE;color:#fff;padding:4px 10px;border-radius:6px">Olívia</span></td><td>7.3 : 1</td><td><span class="pill-pass">AAA</span></td></tr>
+          <tr><td>Azul Principal sobre Verde</td><td><span style="background:#20C997;color:#082B60;padding:4px 10px;border-radius:6px">Olívia</span></td><td>6.5 : 1</td><td><span class="pill-pass">AA · CTA</span></td></tr>
+          <tr><td>Azul Principal sobre Ciano</td><td><span style="background:#25C5D9;color:#082B60;padding:4px 10px;border-radius:6px">Olívia</span></td><td>6.6 : 1</td><td><span class="pill-pass">AA</span></td></tr>
+          <tr><td>Branco sobre Verde</td><td><span style="background:#20C997;color:#fff;padding:4px 10px;border-radius:6px">Olívia</span></td><td>2.1 : 1</td><td><span class="pill-warn">Evitar em texto</span></td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 03 GRADIENTES -->
+    <section id="gradientes">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Gradientes</h2></div>
+      <p class="sec-lead">Os gradientes dão movimento e energia à marca. Use em heróis, faixas, ícones de destaque e no símbolo. Evite mais de dois gradientes na mesma tela.</p>
+      <div class="grid g2">
+        <div><div class="grad-bar" style="background:var(--gradient-electric)"></div><div class="grad-label"><b>Elétrico</b><code>#123BEE → #25C5D9</code></div></div>
+        <div><div class="grad-bar" style="background:var(--gradient-fresh)"></div><div class="grad-label"><b>Fresh</b><code>#25C5D9 → #3DE08A</code></div></div>
+        <div><div class="grad-bar" style="background:var(--gradient-soft);border:1px solid var(--color-border)"></div><div class="grad-label"><b>Suave</b><code>#F5F8FC → #BBD1FF</code></div></div>
+        <div><div class="grad-bar" style="background:var(--gradient-hero)"></div><div class="grad-label"><b>Hero</b><code>#051A3D → #082B60 → #123BEE</code></div></div>
+        <div style="grid-column:1/-1"><div class="grad-bar" style="background:var(--gradient-brand);height:80px;border-radius:var(--radius-lg)"></div><div class="grad-label"><b>Brand (símbolo)</b><code>135° · #25C5D9 → #20C997 → #3DE08A</code></div></div>
+      </div>
+      <div class="code"><div class="code-bar">gradients.css<button class="copy">COPY</button></div>
+<pre><span class="k">--gradient-brand</span>: <span class="v">linear-gradient(135deg, #25C5D9 0%, #20C997 60%, #3DE08A 100%)</span>;
+<span class="k">--gradient-electric</span>: <span class="v">linear-gradient(90deg, #123BEE 0%, #25C5D9 100%)</span>;
+<span class="k">--gradient-fresh</span>: <span class="v">linear-gradient(90deg, #25C5D9 0%, #3DE08A 100%)</span>;
+<span class="k">--gradient-soft</span>: <span class="v">linear-gradient(90deg, #F5F8FC 0%, #BBD1FF 100%)</span>;
+<span class="k">--gradient-hero</span>: <span class="v">linear-gradient(120deg, #051A3D 0%, #082B60 40%, #123BEE 100%)</span>;</pre></div>
+    </section>
+
+    <!-- 04 TIPOGRAFIA -->
+    <section id="tipografia">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Tipografia</h2></div>
+      <p class="sec-lead">Poppins é a fonte única da marca: geométrica, amigável e muito legível em telas pequenas, o que combina com uma assistente que conversa. Títulos em Bold com tracking negativo; textos em Regular.</p>
+
+      <div class="card">
+        <div class="type-hero">
+          <div class="big">Poppins</div>
+          <div class="weights">
+            <div style="font-weight:300">Light 300</div><div style="font-weight:400">Regular 400</div><div style="font-weight:500">Medium 500</div><div style="font-weight:600">Semibold 600</div><div style="font-weight:700">Bold 700</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;font-size:22px;letter-spacing:.02em;color:var(--color-text-muted)">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm · 0123456789 · ÁÉÍÓÚ ãõç</div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="type-row"><div class="lbl"><b>Display</b>56 / 1.1 · Bold · -2%</div><div style="font-size:56px;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--color-primary)">Atenda melhor.</div></div>
+        <div class="type-row"><div class="lbl"><b>H1</b>40 / 1.1 · Bold</div><div style="font-size:40px;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--color-primary)">Sua assistente de IA no <span style="color:var(--color-green)">WhatsApp</span></div></div>
+        <div class="type-row"><div class="lbl"><b>H2</b>32 / 1.25 · Bold</div><div style="font-size:32px;font-weight:700;line-height:1.25;color:var(--color-primary)">Venda mais, 24h por dia</div></div>
+        <div class="type-row"><div class="lbl"><b>H3</b>24 / 1.25 · Semibold</div><div style="font-size:24px;font-weight:600;line-height:1.25;color:var(--color-primary)">Atendimento 24h</div></div>
+        <div class="type-row"><div class="lbl"><b>H4</b>20 / 1.3 · Semibold</div><div style="font-size:20px;font-weight:600;color:var(--color-primary)">Qualificação em tempo real</div></div>
+        <div class="type-row"><div class="lbl"><b>Overline</b>12 · Semibold · Azul Elétrico</div><div class="overline" style="margin:0">Título principal</div></div>
+        <div class="type-row"><div class="lbl"><b>Body LG</b>18 / 1.6 · Regular</div><div style="font-size:18px">Com a Olívia, sua empresa conversa, qualifica e vende 24h por dia.</div></div>
+        <div class="type-row"><div class="lbl"><b>Body</b>16 / 1.6 · Regular</div><div style="font-size:16px">Uma assistente de IA que entende o seu negócio, responde seus clientes com naturalidade e transforma conversas em novas oportunidades.</div></div>
+        <div class="type-row"><div class="lbl"><b>Small</b>14 / 1.5 · Regular</div><div style="font-size:14px;color:var(--color-text-muted)">Respostas rápidas e precisas.</div></div>
+        <div class="type-row"><div class="lbl"><b>Tagline</b>12 · Medium · +32% · CAPS</div><div style="font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--color-primary)">Assistente de IA para atendimento e vendas</div></div>
+      </div>
+
+      <div class="code"><div class="code-bar">typography.css<button class="copy">COPY</button></div>
+<pre><span class="c">/* Google Fonts */</span>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap');
+
+<span class="k">--font-sans</span>: <span class="v">'Poppins', system-ui, sans-serif</span>;
+<span class="k">--fs-display</span>: <span class="v">56px</span>;  <span class="k">--fs-h1</span>: <span class="v">40px</span>;  <span class="k">--fs-h2</span>: <span class="v">32px</span>;  <span class="k">--fs-h3</span>: <span class="v">24px</span>;  <span class="k">--fs-h4</span>: <span class="v">20px</span>;
+<span class="k">--fs-body-lg</span>: <span class="v">18px</span>; <span class="k">--fs-body</span>: <span class="v">16px</span>; <span class="k">--fs-small</span>: <span class="v">14px</span>; <span class="k">--fs-caption</span>: <span class="v">12px</span>;
+<span class="k">--lh-tight</span>: <span class="v">1.1</span>; <span class="k">--lh-snug</span>: <span class="v">1.25</span>; <span class="k">--lh-base</span>: <span class="v">1.6</span>;
+<span class="k">--ls-tight</span>: <span class="v">-0.02em</span>; <span class="k">--ls-wide</span>: <span class="v">0.18em</span>;</pre></div>
+    </section>
+
+    <!-- 05 ESPAÇAMENTO -->
+    <section id="espacamento">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Espaçamento</h2></div>
+      <p class="sec-lead">Grid de base 4px. Componentes internos usam de 8 a 24px; seções e blocos usam de 48 a 96px. Grid de layout: 12 colunas, gutter de 24px e container máximo de 1200px.</p>
+      <div class="card">
+        <div class="space-row"><code>--space-1</code><div class="bar" style="width:4px"></div><span>4px</span></div>
+        <div class="space-row"><code>--space-2</code><div class="bar" style="width:8px"></div><span>8px</span></div>
+        <div class="space-row"><code>--space-3</code><div class="bar" style="width:12px"></div><span>12px</span></div>
+        <div class="space-row"><code>--space-4</code><div class="bar" style="width:16px"></div><span>16px</span></div>
+        <div class="space-row"><code>--space-6</code><div class="bar" style="width:24px"></div><span>24px</span></div>
+        <div class="space-row"><code>--space-8</code><div class="bar" style="width:32px"></div><span>32px</span></div>
+        <div class="space-row"><code>--space-12</code><div class="bar" style="width:48px"></div><span>48px</span></div>
+        <div class="space-row"><code>--space-16</code><div class="bar" style="width:64px"></div><span>64px</span></div>
+        <div class="space-row"><code>--space-20</code><div class="bar" style="width:80px"></div><span>80px</span></div>
+        <div class="space-row"><code>--space-24</code><div class="bar" style="width:96px"></div><span>96px</span></div>
+      </div>
+      <div class="code"><div class="code-bar">spacing.css<button class="copy">COPY</button></div>
+<pre><span class="c">/* base 4px */</span>
+<span class="k">--space-1</span>: <span class="v">4px</span>;  <span class="k">--space-2</span>: <span class="v">8px</span>;  <span class="k">--space-3</span>: <span class="v">12px</span>; <span class="k">--space-4</span>: <span class="v">16px</span>;
+<span class="k">--space-5</span>: <span class="v">20px</span>; <span class="k">--space-6</span>: <span class="v">24px</span>; <span class="k">--space-8</span>: <span class="v">32px</span>; <span class="k">--space-10</span>: <span class="v">40px</span>;
+<span class="k">--space-12</span>: <span class="v">48px</span>; <span class="k">--space-16</span>: <span class="v">64px</span>; <span class="k">--space-20</span>: <span class="v">80px</span>; <span class="k">--space-24</span>: <span class="v">96px</span>;</pre></div>
+    </section>
+
+    <!-- 06 RAIOS -->
+    <section id="raios">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Raios</h2></div>
+      <p class="sec-lead">Formas arredondadas e generosas, como o próprio símbolo. Botões e chips são sempre pill; cards usam 20px; blocos de destaque usam 28px.</p>
+      <div class="grid g6">
+        <div><div class="rad-box" style="border-radius:6px"></div><div class="tile-label"><b>XS</b><code>6px</code></div></div>
+        <div><div class="rad-box" style="border-radius:10px"></div><div class="tile-label"><b>SM</b><code>10px</code></div></div>
+        <div><div class="rad-box" style="border-radius:14px"></div><div class="tile-label"><b>MD · ícones/inputs</b><code>14px</code></div></div>
+        <div><div class="rad-box" style="border-radius:20px"></div><div class="tile-label"><b>LG · cards</b><code>20px</code></div></div>
+        <div><div class="rad-box" style="border-radius:28px"></div><div class="tile-label"><b>XL · hero</b><code>28px</code></div></div>
+        <div><div class="rad-box" style="border-radius:999px"></div><div class="tile-label"><b>Pill · botões</b><code>999px</code></div></div>
+      </div>
+      <div class="code"><div class="code-bar">radius.css<button class="copy">COPY</button></div>
+<pre><span class="k">--radius-xs</span>: <span class="v">6px</span>; <span class="k">--radius-sm</span>: <span class="v">10px</span>; <span class="k">--radius-md</span>: <span class="v">14px</span>; <span class="k">--radius-lg</span>: <span class="v">20px</span>;
+<span class="k">--radius-xl</span>: <span class="v">28px</span>; <span class="k">--radius-2xl</span>: <span class="v">40px</span>; <span class="k">--radius-pill</span>: <span class="v">999px</span>;</pre></div>
+    </section>
+
+    <!-- 07 SOMBRAS -->
+    <section id="sombras">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Sombras</h2></div>
+      <p class="sec-lead">Sombras suaves tingidas de azul, nunca preto puro. O <b>glow</b> verde e o azul ficam reservados para CTAs e elementos ativos.</p>
+      <div class="grid g3">
+        <div><div class="shadow-box" style="box-shadow:var(--shadow-sm)">sm</div><div class="tile-label"><code>--shadow-sm</code></div></div>
+        <div><div class="shadow-box" style="box-shadow:var(--shadow-md)">md</div><div class="tile-label"><code>--shadow-md</code></div></div>
+        <div><div class="shadow-box" style="box-shadow:var(--shadow-lg)">lg</div><div class="tile-label"><code>--shadow-lg</code></div></div>
+        <div><div class="shadow-box" style="box-shadow:var(--shadow-glow);background:var(--color-green)">glow</div><div class="tile-label"><code>--shadow-glow</code></div></div>
+        <div><div class="shadow-box" style="box-shadow:var(--shadow-glow-blue);background:var(--color-electric);color:#fff">glow blue</div><div class="tile-label"><code>--shadow-glow-blue</code></div></div>
+        <div><div class="shadow-box" style="box-shadow:var(--shadow-xs);border:1px solid var(--color-border)">xs + borda</div><div class="tile-label"><code>--shadow-xs</code></div></div>
+      </div>
+      <div class="code"><div class="code-bar">shadows.css<button class="copy">COPY</button></div>
+<pre><span class="k">--shadow-xs</span>: <span class="v">0 1px 2px rgba(8,43,96,.06)</span>;
+<span class="k">--shadow-sm</span>: <span class="v">0 2px 8px rgba(8,43,96,.06), 0 1px 2px rgba(8,43,96,.04)</span>;
+<span class="k">--shadow-md</span>: <span class="v">0 8px 24px rgba(8,43,96,.08), 0 2px 6px rgba(8,43,96,.05)</span>;
+<span class="k">--shadow-lg</span>: <span class="v">0 20px 48px rgba(8,43,96,.14), 0 6px 14px rgba(8,43,96,.06)</span>;
+<span class="k">--shadow-glow</span>: <span class="v">0 8px 28px rgba(32,201,151,.40)</span>;
+<span class="k">--shadow-glow-blue</span>: <span class="v">0 8px 28px rgba(18,59,238,.35)</span>;</pre></div>
+    </section>
+
+    <!-- 08 ÍCONES -->
+    <section id="icones">
+      <div class="sec-head"><span class="sec-num">08</span><h2>Ícones</h2></div>
+      <p class="sec-lead">Ícones de linha com traço de 2px e terminações arredondadas, dentro de tiles com cantos de 14px. Padrão: tile Azul 50 com ícone Azul Elétrico. Biblioteca recomendada: <b>Lucide</b>.</p>
+      <div class="grid g6" style="grid-template-columns:repeat(9,1fr)">
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-chat"/></svg></div>Conversa</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-bolt"/></svg></div>Rapidez</div>
+        <div class="icon-cell"><div class="icon-tile green"><svg width="28" height="28"><use href="#i-users"/></svg></div>Leads</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-cart"/></svg></div>Vendas</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-chart"/></svg></div>Resultados</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-cal"/></svg></div>Agenda</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-tag"/></svg></div>Ofertas</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-layers"/></svg></div>Integração</div>
+        <div class="icon-cell"><div class="icon-tile"><svg width="28" height="28"><use href="#i-gear"/></svg></div>Ajustes</div>
+      </div>
+      <div class="icon-specs">
+        <div><b>2px</b>Espessura do traço</div>
+        <div><b>24px</b>Grid do ícone</div>
+        <div><b>56px</b>Tile padrão (raio 14px)</div>
+        <div><b>Round</b>Cap e join arredondados</div>
+      </div>
+    </section>
+
+    <!-- 09 COMPONENTES -->
+    <section id="componentes">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Componentes</h2></div>
+      <p class="sec-lead">Componentes extraídos da landing page, do chat e dos cards da marca. O CTA principal é sempre o botão Verde Olívia com texto Azul Principal.</p>
+
+      <h3 class="sub">Botões</h3>
+      <div class="card">
+        <div class="comp-row">
+          <button class="btn btn-primary btn-lg">Começar agora <svg width="18" height="18"><use href="#i-arrow"/></svg></button>
+          <button class="btn btn-primary">Testar gratuitamente</button>
+          <button class="btn btn-electric">Falar com especialista</button>
+          <button class="btn btn-outline">Entrar</button>
+          <button class="btn btn-primary btn-sm">Pequeno</button>
+          <button class="btn btn-primary" disabled>Desabilitado</button>
+        </div>
+        <div class="dark-stage" style="margin-top:20px">
+          <button class="btn btn-primary">Começar agora <svg width="18" height="18"><use href="#i-arrow"/></svg></button>
+          <button class="btn btn-ghost-inverse"><svg width="16" height="16"><use href="#i-play"/></svg> Ver como funciona</button>
+          <span class="chip" style="color:#fff;border-color:rgba(255,255,255,.6)">IA para atendimento e vendas</span>
+        </div>
+        <div class="code"><div class="code-bar">button.css<button class="copy">COPY</button></div>
+<pre>.btn { <span class="k">font</span>: <span class="v">600 15px/1 var(--font-sans)</span>; <span class="k">padding</span>: <span class="v">14px 26px</span>; <span class="k">border-radius</span>: <span class="v">var(--radius-pill)</span>;
+       <span class="k">border</span>: <span class="v">1.5px solid transparent</span>; <span class="k">transition</span>: <span class="v">transform .15s, box-shadow .25s</span>; }
+.btn:hover { <span class="k">transform</span>: <span class="v">translateY(-1px)</span>; }
+.btn-primary  { <span class="k">background</span>: <span class="v">var(--color-green)</span>; <span class="k">color</span>: <span class="v">var(--color-primary)</span>; <span class="k">box-shadow</span>: <span class="v">var(--shadow-glow)</span>; }
+.btn-electric { <span class="k">background</span>: <span class="v">var(--color-electric)</span>; <span class="k">color</span>: <span class="v">#fff</span>; }
+.btn-outline  { <span class="k">border-color</span>: <span class="v">var(--color-primary)</span>; <span class="k">color</span>: <span class="v">var(--color-primary)</span>; <span class="k">background</span>: <span class="v">transparent</span>; }
+.btn-ghost-inverse { <span class="k">border-color</span>: <span class="v">rgba(255,255,255,.8)</span>; <span class="k">color</span>: <span class="v">#fff</span>; }</pre></div>
+      </div>
+
+      <h3 class="sub">Badges de status</h3>
+      <div class="card">
+        <div class="comp-row">
+          <span class="badge b-online"><span class="d"></span>Online</span>
+          <span class="badge b-proc"><span class="d"></span>Processando</span>
+          <span class="badge b-warn"><span class="d"></span>Aguardando</span>
+          <span class="badge b-err"><span class="d"></span>Offline</span>
+          <span class="badge b-outline">IA para atendimento e vendas</span>
+          <span class="badge b-new">Novo</span>
+        </div>
+      </div>
+
+      <h3 class="sub">Navegação</h3>
+      <div class="dark-stage" style="display:block">
+        <div class="mock-nav">
+          <span class="logo"><svg width="30" height="30"><use href="#olivia-mark"/></svg><span>olívia<span class="dot">.</span></span></span>
+          <div class="links"><a>Soluções</a><a>Recursos</a><a>Planos</a><a>Ajuda</a></div>
+          <div class="acts"><button class="btn btn-outline btn-sm">Entrar</button><button class="btn btn-primary btn-sm">Testar gratuitamente</button></div>
+        </div>
+      </div>
+
+      <h3 class="sub">Formulário</h3>
+      <div class="card">
+        <div class="grid g3">
+          <label class="field">Nome da empresa<input class="input" placeholder="Ex.: Loja da Ana"><span class="hint">Como seus clientes te conhecem</span></label>
+          <label class="field">WhatsApp<input class="input" value="(11) 98765-4321"><span class="hint">Número que a Olívia vai atender</span></label>
+          <label class="field">E-mail<input class="input err" value="ana@loja"><span class="hint err">Informe um e-mail válido</span></label>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-top:40px;align-items:start">
+        <div>
+          <h3 class="sub" style="margin-top:0">Lista de benefícios</h3>
+          <div class="feature-card">
+            <div class="feature"><div class="ic"><svg width="28" height="28" style="color:#fff"><use href="#i-chat"/></svg></div><div><h4>Atendimento 24h</h4><p>Respostas rápidas e precisas.</p></div></div>
+            <div class="feature"><div class="ic"><svg width="28" height="28" style="color:#fff"><use href="#i-bolt"/></svg></div><div><h4>Mais vendas</h4><p>Qualificação e oportunidades em tempo real.</p></div></div>
+            <div class="feature"><div class="ic"><svg width="28" height="28" style="color:#fff"><use href="#i-layers"/></svg></div><div><h4>Do seu jeito</h4><p>Personalizada com a identidade da sua marca.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <h3 class="sub" style="margin-top:0">Chat (WhatsApp)</h3>
+          <div class="phone">
+            <div class="phone-head">
+              <div class="avatar"><svg width="24" height="24"><use href="#olivia-mark"/></svg></div>
+              <div><b>Olívia</b><small>Assistente virtual · <span style="color:var(--green-600)">online</span></small></div>
+            </div>
+            <div class="chat">
+              <div class="msg in">Olá! 👋<br>Sou a Olívia, a assistente virtual da loja. Como posso te ajudar hoje?<time>10:24</time></div>
+              <div class="msg out">Quero saber sobre os produtos disponíveis.<time>10:25 ✓✓</time></div>
+              <div class="msg in">Perfeito! 😊 Posso te mostrar as opções, valores e condições de pagamento. Qual categoria você prefere?<time>10:25</time></div>
+              <div class="typing"><i></i><i></i><i></i></div>
+            </div>
+            <div class="composer"><input class="input" placeholder="Digite uma mensagem..."><div class="mic"><svg width="20" height="20" style="color:#fff"><use href="#i-mic"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub">Cards de métricas</h3>
+      <div class="grid g4">
+        <div class="stat"><small>Conversas hoje</small><div class="n">1.284</div><span class="delta">▲ 18% vs ontem</span></div>
+        <div class="stat"><small>Leads qualificados</small><div class="n">312</div><span class="delta">▲ 9%</span></div>
+        <div class="stat"><small>Tempo de resposta</small><div class="n">3s</div><span class="delta">▼ 72%</span></div>
+        <div class="stat"><small>Vendas pela Olívia</small><div class="n">R$ 48k</div><span class="delta">▲ 24%</span></div>
+      </div>
+
+      <h3 class="sub">Planos</h3>
+      <div class="grid g3">
+        <div class="plan"><h4>Essencial</h4><div class="price">R$ 197<small>/mês</small></div><ul><li>1 canal (WhatsApp)</li><li>Até 1.000 conversas</li><li>Respostas 24h</li></ul><button class="btn btn-outline">Escolher plano</button></div>
+        <div class="plan featured"><span class="badge b-new" style="align-self:flex-start">Mais escolhido</span><h4>Profissional</h4><div class="price">R$ 397<small>/mês</small></div><ul><li>WhatsApp + Instagram</li><li>Até 5.000 conversas</li><li>Qualificação de leads</li></ul><button class="btn btn-primary">Testar gratuitamente</button></div>
+        <div class="plan"><h4>Empresa</h4><div class="price">Sob medida</div><ul><li>Canais ilimitados</li><li>Integração com CRM</li><li>Gerente dedicado</li></ul><button class="btn btn-outline">Falar com vendas</button></div>
+      </div>
+      <p class="hint" style="margin-top:10px">* Valores ilustrativos, só para demonstrar o componente.</p>
+    </section>
+
+    <!-- 10 APOIO -->
+    <section id="apoio">
+      <div class="sec-head"><span class="sec-num">10</span><h2>Elementos de apoio</h2></div>
+      <p class="sec-lead">Formas derivadas do símbolo: folha, gota/balão e quarto de círculo. Use como grafismos em posts, banners e cantos de layout, sempre cortadas pela borda do quadro e em no máximo 3 por peça.</p>
+      <div class="card">
+        <div class="shapes">
+          <div class="sh sh-leaf"></div><div class="sh sh-drop"></div><div class="sh sh-quarter"></div><div class="sh sh-outline"></div><div class="sh sh-bubble"></div>
+        </div>
+      </div>
+      <div class="grid g2" style="margin-top:20px">
+        <div class="dd do"><h4>✓ Faça</h4><ul><li>Corte as formas pela borda da peça (sangria).</li><li>Combine 1 forma em gradiente com 1 em cor sólida.</li><li>Use o Azul Suave para formas de fundo.</li></ul></div>
+        <div class="dd dont"><h4>✕ Evite</h4><ul><li>Formas soltas no meio do conteúdo.</li><li>Mais de 3 formas por composição.</li><li>Formas competindo com o CTA.</li></ul></div>
+      </div>
+    </section>
+
+    <!-- 11 VOZ -->
+    <section id="voz">
+      <div class="sec-head"><span class="sec-num">11</span><h2>Tom de voz</h2></div>
+      <p class="sec-lead">A Olívia fala como uma atendente simpática e eficiente: próxima, clara e focada em resolver.</p>
+      <div class="grid g4">
+        <div class="card"><div class="icon-tile green" style="width:48px;margin-bottom:12px"><svg width="22" height="22"><use href="#i-chat"/></svg></div><h4 style="color:var(--color-primary)">Humana</h4><p class="hint" style="font-size:14px">Usa "você", emojis com moderação e frases curtas.</p></div>
+        <div class="card"><div class="icon-tile" style="width:48px;margin-bottom:12px"><svg width="22" height="22"><use href="#i-bolt"/></svg></div><h4 style="color:var(--color-primary)">Direta</h4><p class="hint" style="font-size:14px">Vai ao ponto e sempre oferece o próximo passo.</p></div>
+        <div class="card"><div class="icon-tile" style="width:48px;margin-bottom:12px"><svg width="22" height="22"><use href="#i-chart"/></svg></div><h4 style="color:var(--color-primary)">Orientada a resultado</h4><p class="hint" style="font-size:14px">Fala de ganhos concretos: mais vendas, menos espera.</p></div>
+        <div class="card"><div class="icon-tile" style="width:48px;margin-bottom:12px"><svg width="22" height="22"><use href="#i-check"/></svg></div><h4 style="color:var(--color-primary)">Confiável</h4><p class="hint" style="font-size:14px">Nada de promessas exageradas ou jargão técnico.</p></div>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <p class="overline">Headlines de referência</p>
+        <p style="font-size:24px;font-weight:700;color:var(--color-primary);line-height:1.3">Inteligência que conversa. Tecnologia que vende.<br>Atenda melhor. Venda mais.<br>Sua assistente de IA no <span style="color:var(--color-green)">WhatsApp</span> e <span style="color:var(--color-green)">Instagram</span>.</p>
+      </div>
+    </section>
+
+    <!-- 12 TOKENS -->
+    <section id="tokens">
+      <div class="sec-head"><span class="sec-num">12</span><h2>Tokens</h2></div>
+      <p class="sec-lead">Arquivo completo de variáveis CSS. Copie e cole no <code>:root</code> do seu projeto.</p>
+      <div class="code"><div class="code-bar">olivia-tokens.css<button class="copy">COPY</button></div>
+<pre id="tokens-pre"></pre></div>
+
+      <h3 class="sub">Tailwind config</h3>
+      <div class="code"><div class="code-bar">tailwind.config.js<button class="copy">COPY</button></div>
+<pre>module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        olivia: {
+          primary: <span class="v">'#082B60'</span>, electric: <span class="v">'#123BEE'</span>, cyan: <span class="v">'#25C5D9'</span>,
+          green: <span class="v">'#20C997'</span>, soft: <span class="v">'#BBD1FF'</span>, ice: <span class="v">'#F5F8FC'</span>,
+          text: <span class="v">'#0A1F44'</span>, muted: <span class="v">'#5B6B86'</span>, border: <span class="v">'#E3EAF5'</span>,
+        },
+      },
+      fontFamily: { sans: [<span class="v">'Poppins'</span>, <span class="v">'system-ui'</span>, <span class="v">'sans-serif'</span>] },
+      borderRadius: { md: <span class="v">'14px'</span>, lg: <span class="v">'20px'</span>, xl: <span class="v">'28px'</span> },
+      boxShadow: {
+        glow: <span class="v">'0 8px 28px rgba(32,201,151,.40)'</span>,
+        card: <span class="v">'0 8px 24px rgba(8,43,96,.08), 0 2px 6px rgba(8,43,96,.05)'</span>,
+      },
+      backgroundImage: {
+        brand: <span class="v">'linear-gradient(135deg,#25C5D9 0%,#20C997 60%,#3DE08A 100%)'</span>,
+        hero:  <span class="v">'linear-gradient(120deg,#051A3D 0%,#082B60 40%,#123BEE 100%)'</span>,
+      },
+    },
+  },
+};</pre></div>
+    </section>
+
+    <!-- 13 QUICK START -->
+    <section id="quickstart">
+      <div class="sec-head"><span class="sec-num">13</span><h2>Quick Start</h2></div>
+      <p class="sec-lead">Exemplo mínimo de uma seção hero com a identidade Olívia.</p>
+      <div class="code"><div class="code-bar">hero.html<button class="copy">COPY</button></div>
+<pre>&lt;link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+&lt;link rel="stylesheet" href="olivia-tokens.css"&gt;
+
+&lt;section style="background:var(--gradient-hero);color:#fff;padding:var(--space-20) var(--space-8);border-radius:var(--radius-xl)"&gt;
+  &lt;span class="chip"&gt;IA para atendimento e vendas&lt;/span&gt;
+  &lt;h1 style="font:700 var(--fs-h1)/1.1 var(--font-sans);letter-spacing:var(--ls-tight)"&gt;
+    Sua assistente de IA no &lt;span style="color:var(--color-green)"&gt;WhatsApp&lt;/span&gt;
+  &lt;/h1&gt;
+  &lt;p&gt;Atenda clientes, tire dúvidas e aumente suas vendas.&lt;/p&gt;
+  &lt;a class="btn btn-primary" href="#"&gt;Começar agora →&lt;/a&gt;
+&lt;/section&gt;</pre></div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span class="logo" style="font-size:20px;justify-content:center"><svg width="24" height="24"><use href="#olivia-mark"/></svg><span>olívia<span class="dot">.</span></span></span>
+  <p style="margin-top:8px">Design System Olívia · v1.0 · 2026</p>
+</footer>
+
+<script>
+// Full tokens block (generated from :root so it always matches)
+const tokensText = `:root {
+  /* ========== COLORS · BRAND ========== */
+  --color-primary: #082B60;   /* Azul Principal */
+  --color-electric: #123BEE;  /* Azul Elétrico */
+  --color-cyan: #25C5D9;      /* Ciano */
+  --color-green: #20C997;     /* Verde Olívia */
+  --color-soft: #BBD1FF;      /* Azul Suave */
+  --color-ice: #F5F8FC;       /* Branco Gelo */
+
+  /* ========== COLORS · SCALES ========== */
+  --blue-50: #EEF3FF;  --blue-100: #DCE6FF; --blue-200: #BBD1FF; --blue-300: #8FB0FF;
+  --blue-400: #5A82F7; --blue-500: #123BEE; --blue-600: #0E2FC4; --blue-700: #0B2496;
+  --blue-800: #0A2A78; --blue-900: #082B60; --blue-950: #051A3D;
+  --green-50: #E8FAF3; --green-100: #C6F3E0; --green-300: #6FE0B5; --green-400: #3DD9A4;
+  --green-500: #20C997; --green-600: #17A57B; --green-700: #11805F;
+  --cyan-50: #E6F9FB;  --cyan-300: #7EDDE9;  --cyan-500: #25C5D9;  --cyan-600: #1AA3B5;
+
+  /* ========== COLORS · SEMANTIC ========== */
+  --color-bg: #F5F8FC;
+  --color-surface: #FFFFFF;
+  --color-surface-tint: #EEF3FF;
+  --color-text: #0A1F44;
+  --color-text-muted: #5B6B86;
+  --color-text-inverse: #FFFFFF;
+  --color-border: #E3EAF5;
+  --color-accent: var(--color-green);
+  --color-on-accent: var(--color-primary);
+  --color-success: #20C997;
+  --color-warning: #F5A524;
+  --color-error: #EF4444;
+  --color-info: #123BEE;
+
+  /* ========== GRADIENTS ========== */
+  --gradient-brand: linear-gradient(135deg, #25C5D9 0%, #20C997 60%, #3DE08A 100%);
+  --gradient-electric: linear-gradient(90deg, #123BEE 0%, #25C5D9 100%);
+  --gradient-fresh: linear-gradient(90deg, #25C5D9 0%, #3DE08A 100%);
+  --gradient-soft: linear-gradient(90deg, #F5F8FC 0%, #BBD1FF 100%);
+  --gradient-hero: linear-gradient(120deg, #051A3D 0%, #082B60 40%, #123BEE 100%);
+
+  /* ========== TYPOGRAPHY ========== */
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fw-light: 300; --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+  --fs-display: 56px; --fs-h1: 40px; --fs-h2: 32px; --fs-h3: 24px; --fs-h4: 20px;
+  --fs-body-lg: 18px; --fs-body: 16px; --fs-small: 14px; --fs-caption: 12px; --fs-overline: 11px;
+  --lh-tight: 1.1; --lh-snug: 1.25; --lh-base: 1.6;
+  --ls-tight: -0.02em; --ls-wide: 0.18em;
+
+  /* ========== SPACING (base 4px) ========== */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+  /* ========== RADIUS ========== */
+  --radius-xs: 6px; --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px;
+  --radius-xl: 28px; --radius-2xl: 40px; --radius-pill: 999px;
+
+  /* ========== SHADOWS ========== */
+  --shadow-xs: 0 1px 2px rgba(8,43,96,.06);
+  --shadow-sm: 0 2px 8px rgba(8,43,96,.06), 0 1px 2px rgba(8,43,96,.04);
+  --shadow-md: 0 8px 24px rgba(8,43,96,.08), 0 2px 6px rgba(8,43,96,.05);
+  --shadow-lg: 0 20px 48px rgba(8,43,96,.14), 0 6px 14px rgba(8,43,96,.06);
+  --shadow-glow: 0 8px 28px rgba(32,201,151,.40);
+  --shadow-glow-blue: 0 8px 28px rgba(18,59,238,.35);
+
+  /* ========== MOTION ========== */
+  --ease-out: cubic-bezier(.2,.8,.2,1);
+  --dur-fast: 150ms; --dur-base: 250ms;
+}`;
+document.getElementById('tokens-pre').textContent = tokensText;
+
+function copyText(t, btn){
+  const done = () => { if(!btn) return; const o = btn.textContent; btn.textContent = 'COPIADO ✓'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent=o;btn.classList.remove('ok')},1500); };
+  const fallback = () => { const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy')}catch(e){} ta.remove(); done(); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(done, fallback); else fallback();
+}
+document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => copyText(b.closest('.code').querySelector('pre').innerText, b)));
+document.querySelectorAll('.swatch').forEach(s => s.addEventListener('click', () => {
+  copyText(s.dataset.copy);
+  const b = s.querySelector('b'); const o = b.textContent; b.textContent = 'Copiado ' + s.dataset.copy; setTimeout(()=>b.textContent=o, 1200);
+}));
+</script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Depoimentos Conversas no WhatsApp</title>
+<!--
+  © 2026 Upward Creative Academy. Todos os direitos reservados.
+  LICENÇA DE USO: liberado para usar em projetos seus e de clientes.
+  É proibido revender, redistribuir, compartilhar ou publicar este código (original ou modificado)
+  como template, kit, curso ou produto.
+
+  Depoimentos Conversas no WhatsApp
+  Uma lista de conversas ao lado de um celular com o WhatsApp aberto. Quando a dobra aparece, a conversa acontece:
+  "digitando…", mensagens chegando uma a uma, um áudio que toca, um cartão de resultado com o número subindo e os
+  tiques ficando azuis. Clique ou toque numa pessoa (ou use as setas do teclado na lista) para abrir a conversa dela.
+  Sem ninguém mexendo, as conversas trocam sozinhas: pausa com o mouse em cima, com o foco ou no botão de pausa.
+
+  COMO USAR: copie o bloco entre "COPIE DAQUI" e "ATÉ AQUI" para um widget HTML do Elementor (ou para o seu código).
+  - No Elementor, use um contêiner de largura total e sem espaçamento interno: a dobra já traz o próprio fundo, os
+    espaçamentos e a largura máxima do conteúdo.
+  PERSONALIZAR:
+  - Textos da esquerda: selo "Quem já entrou", título (a palavra em destaque fica dentro do <em>), frase de apoio e,
+    no rodapé, a nota e o número de alunos.
+  - Pessoas: cada <button class="upw-sec-zap__c"> da lista é uma pessoa (iniciais, nome, horário, prévia da última
+    mensagem e número de não lidas). Para usar foto, troque as iniciais por <img src="..." alt="">. A cor do avatar
+    muda sozinha; para escolher, ponha style="--upw-av: #1d4ed8" no botão.
+  - Conversas: cada <div class="upw-sec-zap__chat">, NA MESMA ORDEM dos botões. Mensagem do aluno = classe
+    upw-sec-zap__in; resposta sua = upw-sec-zap__out (os tiques aparecem sozinhos). O horário fica em upw-sec-zap__t e o dia ("Hoje") em upw-sec-zap__day.
+    Áudio = bloco upw-sec-zap__audio: só a duração (__dur), o horário e a transcrição (__tr); a onda e o play
+    aparecem sozinhos. Resultado = bloco upw-sec-zap__win: rótulo no <small>, número no <strong> (ele sobe do zero
+    até o valor) e a reação em __re. As suas mensagens do começo da conversa já aparecem como lidas.
+  - Adicionar ou tirar uma pessoa: copie (ou apague) um <button> da lista E a conversa na mesma posição.
+  - Opções na <section>: data-hold="6" (segundos até passar para a próxima conversa sozinho; 0 desliga) e
+    data-speed="1" (2 = as mensagens chegam duas vezes mais rápido).
+  - Cores nas variáveis --upw-... no começo do CSS (fundo, verde, balões, tique azul). "online", "digitando…" e os
+    textos do botão de pausa ficam no objeto TXT no começo do script.
+  - Use depoimentos reais, com autorização de quem mandou.
+-->
+<style>/* upw:upw6a7057a9bb48 */
+  /* Só para a prévia: tira a margem da página e usa o mesmo fundo da dobra. Não precisa copiar. */
+  html, body { margin: 0; background: #0a0f0d; }
+</style>
+</head>
+<body>
+
+<!-- ===== COPIE DAQUI ===== -->
+<style>/* upw:upw6a7057a9bb48 */
+.upw-sec-zap{
+/* cores e fonte (troque aqui) */
+--upw-bg:#0a0f0d;--upw-green:#25d366;--upw-text:#e9edef;--upw-muted:#97a6ae;--upw-star:#fbbf24;
+--upw-chat:#0b141a;--upw-in:#202c33;--upw-out:#005c4b;--upw-bar:#1f2c34;--upw-blue:#53bdeb;
+--upw-f:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;--upw-pad:clamp(20px,4vw,48px);--upw-e:cubic-bezier(.2,.8,.2,1);
+/* desenhos: onda do áudio, tiques, microfone, linha do gráfico e rabiscos do fundo do chat */
+--upw-wv:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 24' preserveAspectRatio='none'><path d='M2 7.5v9M6 2.5v19M10 7v10M14 7v10M18 8v8M22 8v8M26 4v16M30 2.5v19M34 8.5v7M38 9v6M42 6.5v11M46 8.5v7M50 2v20M54 7.5v9M58 7.5v9M62 8v8M66 7v10M70 3.5v17M74 3.5v17M78 9v6M82 9v6M86 6v12M90 8.5v7M94 3v18M98 7v10M102 8v8M106 8v8M110 4.5v15M114 6v12M118 3.5v17' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/></svg>");
+--upw-tk2:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 11' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M1 5.8l3.2 3.2 6.4-7.5M6.4 8.2l.8.8 6.4-7.5'/></svg>");
+--upw-mic:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M12 14.5a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5a3.5 3.5 0 0 0 3.5 3.5zM18 11a6 6 0 0 1-12 0H4.5a7.5 7.5 0 0 0 6.75 7.46V21h1.5v-2.54A7.5 7.5 0 0 0 19.5 11z'/></svg>");
+--upw-spark:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'><path d='M0 36C16 35 26 31 40 32S66 26 80 27S102 20 116 21S138 13 150 13S168 10 176 10S192 6 200 4' fill='none' stroke='%2325d366' stroke-width='2' vector-effect='non-scaling-stroke'/></svg>");
+--upw-doodle:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' fill='none' stroke='%23fff' stroke-opacity='.045' stroke-width='1.5' stroke-linecap='round'><path d='M24 30c-5-4-9-7-9-11a4.5 4.5 0 0 1 9-1.5 4.5 4.5 0 0 1 9 1.5c0 4-4 7-9 11zM122 14v14M115 21h14M30 74h24a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6H42l-7 6v-6h-5a6 6 0 0 1-6-6V80a6 6 0 0 1 6-6zM78 72q6-7 12 0t12 0 12 0M86 112l-7 13h7l-4 13 11-16h-7l4-10zM130 120l8 8M138 120l-8 8'/><circle cx='80' cy='22' r='7'/><circle cx='126' cy='82' r='10'/></svg>");
+position:relative;isolation:isolate;overflow:hidden;display:block;box-sizing:border-box;width:100%;margin:0;padding:clamp(56px,5vw + 10px,120px) var(--upw-pad);background:radial-gradient(55% 45% at 0 0,#25d36614,#0000 70%),var(--upw-bg);color:var(--upw-text);font:400 16px/1.5 var(--upw-f);text-align:left;letter-spacing:normal;-webkit-font-smoothing:antialiased}
+.upw-sec-zap *,.upw-sec-zap *::before,.upw-sec-zap *::after{box-sizing:border-box}
+.upw-sec-zap [hidden]{display:none !important}
+.upw-sec-zap p,.upw-sec-zap h2{margin:0;padding:0}
+.upw-sec-zap__wrap{position:relative;display:grid;gap:34px;max-width:1160px;margin:0 auto}
+.upw-sec-zap__copy{min-width:0;text-align:center}
+
+/* ---------- textos ---------- */
+.upw-sec-zap .upw-sec-zap__eye{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 12px;border:1px solid #25d36647;border-radius:99px;background:#25d36612;color:#86efac;font:600 12px/1 var(--upw-f);letter-spacing:.14em;text-transform:uppercase}
+.upw-sec-zap__eye i,.upw-sec-zap__eye i::after{position:relative;width:7px;height:7px;border-radius:50%;background:var(--upw-green)}
+.upw-sec-zap__eye i::after{content:'';position:absolute;inset:0;opacity:0}
+.upw-sec-zap .upw-sec-zap__h{margin:20px 0 0;color:#f3f6f4;font:600 clamp(31px,1rem + 3vw,54px)/1.04 var(--upw-f);letter-spacing:-.035em;text-transform:none;text-wrap:balance}
+.upw-sec-zap .upw-sec-zap__h em{padding-right:.06em;font:italic 400 1em/1 Georgia,'Times New Roman',serif;letter-spacing:-.01em;color:var(--upw-green);background:linear-gradient(100deg,#25d366 20%,#b7f7cf);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.upw-sec-zap__dots{display:inline-flex;align-items:center;gap:.07em;height:.5em;margin-left:.12em;padding:0 .16em;border-radius:.25em;background:#25d36624;vertical-align:.08em}
+.upw-sec-zap__dots i{width:.085em;height:.085em;border-radius:50%;background:var(--upw-green)}
+.upw-sec-zap .upw-sec-zap__lead{max-width:30em;margin:16px auto 0;color:#e9edefb3;font:400 clamp(15.5px,.9rem + .3vw,17.5px)/1.6 var(--upw-f)}
+
+/* ---------- lista de pessoas (no celular vira uma fileira de "chips") ---------- */
+.upw-sec-zap__list{position:relative;display:flex;gap:8px;margin:26px 0 0}
+.upw-sec-zap .upw-sec-zap__c,.upw-sec-zap .upw-sec-zap__c:hover,.upw-sec-zap .upw-sec-zap__c:focus,.upw-sec-zap .upw-sec-zap__pause,.upw-sec-zap .upw-sec-zap__pause:hover,.upw-sec-zap .upw-sec-zap__pause:focus{-webkit-appearance:none;appearance:none;margin:0;border:1px solid var(--upw-bd,#0000);border-radius:var(--upw-r,99px);background:var(--upw-rb,#0000);box-shadow:none;color:var(--upw-text);letter-spacing:normal;text-decoration:none;text-transform:none;outline:0;cursor:pointer}
+.upw-sec-zap .upw-sec-zap__c{--upw-rb:#ffffff0d;--upw-bd:#ffffff14;position:relative;height:auto;min-height:44px;font:500 14px/1.25 var(--upw-f);text-align:left;white-space:nowrap;flex:none;display:grid;grid-template-columns:30px auto auto;align-items:center;column-gap:9px;padding:8px 14px 8px 8px;transition:background-color .25s,border-color .25s,opacity .7s calc(var(--upw-i,0) * 70ms + .25s),translate .9s var(--upw-e) calc(var(--upw-i,0) * 70ms + .25s)}
+.upw-sec-zap__c:nth-child(5n+1),.upw-sec-zap__phone{--upw-av:linear-gradient(135deg,#f472b6,#be185d)}
+.upw-sec-zap__c:nth-child(5n+2){--upw-av:linear-gradient(135deg,#60a5fa,#1d4ed8)}
+.upw-sec-zap__c:nth-child(5n+3){--upw-av:linear-gradient(135deg,#fbbf24,#c2410c)}
+.upw-sec-zap__c:nth-child(5n+4){--upw-av:linear-gradient(135deg,#a78bfa,#6d28d9)}
+.upw-sec-zap__c:nth-child(5n+5){--upw-av:linear-gradient(135deg,#2dd4bf,#0f766e)}
+.upw-sec-zap .upw-sec-zap__c.is-cur{--upw-rb:#25d36621;--upw-bd:#25d36680}
+@media (hover:hover){.upw-sec-zap .upw-sec-zap__c:hover{--upw-rb:#ffffff14}
+.upw-sec-zap .upw-sec-zap__c.is-cur:hover{--upw-rb:#25d3662b}
+.upw-sec-zap .upw-sec-zap__pause:hover{--upw-rb:#ffffff14;--upw-bd:#ffffff3d}
+}
+.upw-sec-zap__scr:focus{outline:0}
+.upw-sec-zap .upw-sec-zap__c:focus-visible,.upw-sec-zap .upw-sec-zap__pause:focus-visible,.upw-sec-zap__scr:focus-visible{outline:2px solid var(--upw-green);outline-offset:2px}
+.upw-sec-zap__av{position:relative;flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--upw-av,linear-gradient(135deg,#34d399,#047857));color:#fff;font-size:11px;font-weight:700;letter-spacing:.02em;transition:box-shadow .25s}
+.upw-sec-zap__av img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.upw-sec-zap__c.is-typing .upw-sec-zap__av{box-shadow:0 0 0 2px var(--upw-bg),0 0 0 4px var(--upw-green)}
+.upw-sec-zap__n{overflow:hidden;font-size:14px;font-weight:600;text-overflow:ellipsis}
+.upw-sec-zap__tm,.upw-sec-zap__p{display:none}
+.upw-sec-zap__b{display:grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--upw-green);color:#052e16;font-size:11px;font-weight:700;line-height:1;transition:scale .35s cubic-bezier(.3,1.5,.5,1),opacity .25s}
+.upw-sec-zap__c.is-read .upw-sec-zap__b{scale:0;opacity:0}
+
+/* ---------- rodapé:prova social e botão de pausa ---------- */
+.upw-sec-zap__foot{display:flex;align-items:center;justify-content:center;gap:14px 20px;margin-top:20px}
+.upw-sec-zap .upw-sec-zap__proof{display:flex;align-items:center;gap:12px;color:var(--upw-muted);font:400 13.5px/1.35 var(--upw-f);text-align:left}
+.upw-sec-zap .upw-sec-zap__proof b{color:var(--upw-text);font-weight:700}
+.upw-sec-zap__stars{color:var(--upw-star);font-size:12px;letter-spacing:.1em}
+.upw-sec-zap .upw-sec-zap__pause{--upw-rb:#ffffff08;--upw-bd:#ffffff21;display:inline-flex;align-items:center;gap:10px;width:auto;height:auto;min-height:44px;padding:4px 16px 4px 4px;font:600 13.5px/1.25 var(--upw-f);white-space:nowrap;transition:background-color .25s,border-color .25s}
+.upw-sec-zap__ico{position:relative;flex:none;width:34px;height:34px}
+.upw-sec-zap__ico svg{position:absolute;inset:0;width:100%;height:100%;rotate:-90deg;fill:none;stroke:#ffffff21;stroke-width:2.5}
+.upw-sec-zap__ico circle + circle{stroke:var(--upw-green);stroke-linecap:round;stroke-dasharray:101;stroke-dashoffset:101}
+.upw-sec-zap__ico::before,.upw-sec-zap__ico::after{content:'';position:absolute;top:12px;left:13px;width:3px;height:10px;border-radius:1px;background:currentColor}
+.upw-sec-zap__ico::after{left:18px}
+.upw-sec-zap__pause.is-paused .upw-sec-zap__ico::before{top:11px;left:14px;width:9px;height:12px;border-radius:0;clip-path:polygon(0 0,100% 50%,0 100%)}
+.upw-sec-zap__pause.is-paused .upw-sec-zap__ico::after{display:none}
+.upw-sec-zap.is-count .upw-sec-zap__ico circle + circle{animation:upw-zap-count var(--upw-hold,6s) linear forwards}
+.upw-sec-zap.is-wait .upw-sec-zap__ico circle + circle{animation-play-state:paused}
+
+@media (max-width:879.98px){.upw-sec-zap__list{margin-inline:calc(var(--upw-pad) * -1);padding:4px var(--upw-pad);overflow-x:auto;scrollbar-width:none;-webkit-mask:linear-gradient(90deg,#0000,#000 var(--upw-pad),#000 calc(100% - var(--upw-pad)),#0000)}
+.upw-sec-zap__list::-webkit-scrollbar{display:none}
+.upw-sec-zap .upw-sec-zap__c:first-child{margin-left:auto}
+.upw-sec-zap .upw-sec-zap__c:last-child{margin-right:auto}
+.upw-sec-zap__c.is-read .upw-sec-zap__b{display:none}
+.upw-sec-zap .upw-sec-zap__pause{padding:4px}
+.upw-sec-zap__bt{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+}
+@media (min-width:880px){.upw-sec-zap__wrap{grid-template-columns:minmax(0,540px) minmax(300px,1fr);align-items:center;gap:40px}
+.upw-sec-zap__copy{text-align:left}
+.upw-sec-zap .upw-sec-zap__lead{margin-left:0}
+.upw-sec-zap__list{flex-direction:column;gap:2px;margin-top:30px;padding:6px;border:1px solid #ffffff12;border-radius:22px;background:linear-gradient(#ffffff0b,#ffffff04);box-shadow:0 30px 60px -32px #000b}
+.upw-sec-zap .upw-sec-zap__c{--upw-rb:#0000;--upw-bd:#0000;grid-template-columns:44px minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:14px;row-gap:2px;width:100%;min-height:62px;padding:9px 14px 9px 12px;--upw-r:16px}
+.upw-sec-zap .upw-sec-zap__c.is-cur{--upw-rb:#25d36617;--upw-bd:#25d36629}
+.upw-sec-zap__c::before{content:'';position:absolute;left:-1px;top:50%;width:3px;height:28px;margin-top:-14px;border-radius:0 3px 3px 0;background:var(--upw-green);box-shadow:0 0 12px var(--upw-green);scale:1 0;transition:scale .35s var(--upw-e)}
+.upw-sec-zap__c.is-cur::before{scale:1 1}
+.upw-sec-zap__c .upw-sec-zap__av{grid-row:1 / 3;width:44px;height:44px;font-size:14px}
+.upw-sec-zap__n{align-self:end;font-size:15.5px}
+.upw-sec-zap__tm{display:block;align-self:end;justify-self:end;color:var(--upw-green);font-size:12px;font-weight:500}
+.upw-sec-zap__c.is-read .upw-sec-zap__tm{color:var(--upw-muted)}
+.upw-sec-zap__p{display:block;grid-column:2;align-self:start;overflow:hidden;color:var(--upw-muted);font-size:14px;font-weight:400;line-height:1.35;text-overflow:ellipsis}
+.upw-sec-zap__c.is-typing .upw-sec-zap__p{color:var(--upw-green)}
+.upw-sec-zap__p.is-mine::before{content:'';display:inline-block;width:17px;height:11px;margin-right:4px;vertical-align:-1px;background:var(--upw-blue);-webkit-mask:var(--upw-tk2) center / contain no-repeat}
+.upw-sec-zap__b{grid-column:3;grid-row:2;justify-self:end}
+.upw-sec-zap__foot{justify-content:space-between;margin-top:18px;padding:0 6px}
+}
+
+/* ---------- palco e celular ---------- */
+.upw-sec-zap__stage{position:relative;z-index:0;display:grid;justify-items:center;min-width:0}
+.upw-sec-zap__stage::before{content:'';position:absolute;z-index:-1;left:50%;top:50%;width:780px;height:780px;margin:-390px 0 0 -390px;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,#25d36633,#25d3660d 50%,#0000),repeating-radial-gradient(circle,#0000 0 74px,#86efac12 75px 76px);-webkit-mask:radial-gradient(closest-side,#000 35%,#0000)}
+.upw-sec-zap__ping{position:absolute;z-index:-1;left:50%;top:50%;width:520px;height:520px;margin:-260px 0 0 -260px;border:1px solid #25d36699;border-radius:50%;opacity:0;pointer-events:none}
+.upw-sec-zap__phone{position:relative;width:min(var(--upw-pw,300px),100%);aspect-ratio:300 / 616;padding:9px;border-radius:50px;background:linear-gradient(145deg,#59625d,#1b201e 16%,#0d100f 55%,#262c29 88%,#4a524d);box-shadow:inset 0 0 0 1px #ffffff29,inset 0 0 0 3px #060807,0 0 0 1px #0008,0 46px 80px -28px #000e,0 24px 110px -30px #25d36659;transition:opacity .9s .1s,translate 1.1s var(--upw-e) .1s,scale 1.1s var(--upw-e) .1s}
+@media (min-width:1360px){.upw-sec-zap__phone{--upw-pw:316px}
+}
+.upw-sec-zap__scr{position:relative;display:flex;flex-direction:column;height:100%;overflow:hidden;border-radius:41px;background:var(--upw-chat);isolation:isolate}
+.upw-sec-zap__scr::before{content:'';position:absolute;z-index:9;top:10px;left:50%;width:86px;height:25px;margin-left:-43px;border-radius:20px;background:#000}
+.upw-sec-zap__scr::after{content:'';position:absolute;z-index:9;inset:0;background:linear-gradient(118deg,#ffffff12,#fff0 32%);pointer-events:none}
+.upw-sec-zap__top,.upw-sec-zap__bot{position:relative;z-index:3;flex:none;background:var(--upw-bar)}
+.upw-sec-zap__sb{display:flex;align-items:center;justify-content:space-between;height:44px;padding:6px 24px 0 32px;color:#fff;font-size:13.5px;font-weight:600}
+.upw-sec-zap__sb svg{width:50px;height:12px;fill:currentColor}
+.upw-sec-zap__hd{display:flex;align-items:center;gap:8px;padding:2px 14px 9px 6px;border-bottom:1px solid #ffffff0a}
+.upw-sec-zap__ic{flex:none;width:22px;height:22px;fill:none;stroke:var(--upw-green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.upw-sec-zap__ic + .upw-sec-zap__ic{margin-left:10px}
+.upw-sec-zap__hd .upw-sec-zap__av{width:34px;height:34px;font-size:12px}
+.upw-sec-zap .upw-sec-zap__who{display:grid;flex:1;min-width:0;margin:0;font-size:14px;line-height:1.3}
+.upw-sec-zap .upw-sec-zap__who b{overflow:hidden;font-size:14.5px;font-weight:600;text-overflow:ellipsis;white-space:nowrap}
+.upw-sec-zap .upw-sec-zap__who small{color:#a3b1b9;font-size:11.5px}
+.upw-sec-zap .upw-sec-zap__who small.is-hot{color:var(--upw-green)}
+.upw-sec-zap__body{position:relative;flex:1;min-height:0;overflow:hidden}
+.upw-sec-zap__bot{display:flex;align-items:center;gap:9px;padding:8px 10px 26px 8px}
+.upw-sec-zap__bot::after{content:'';position:absolute;left:50%;bottom:8px;width:108px;height:4px;margin-left:-54px;border-radius:3px;background:#fffc}
+.upw-sec-zap__bot span{flex:1;height:34px;padding:0 14px;border-radius:18px;background:#2a3942;color:#8696a0;font-size:13.5px;line-height:34px}
+.upw-sec-zap__bot i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--upw-mic) center / 18px no-repeat,#00a884}
+
+/* ---------- conversa ---------- */
+.upw-sec-zap__chat{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;z-index:1;padding:10px 16px 8px;background:var(--upw-chat);box-shadow:-18px 0 30px -14px #000b}
+.upw-sec-zap__chat::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--upw-doodle) 0 0 / 150px 150px;will-change:transform}
+.upw-sec-zap__chat ~ .upw-sec-zap__chat,.upw-sec-zap.upw-js .upw-sec-zap__chat,.upw-sec-zap__chat > .is-off{display:none}
+.upw-sec-zap.upw-js .upw-sec-zap__chat.is-cur,.upw-sec-zap.upw-js .upw-sec-zap__chat.is-prev{display:flex}
+.upw-sec-zap__chat.is-cur{z-index:2}
+.upw-sec-zap__day{flex:none;align-self:center;margin-bottom:4px;padding:4px 10px;border-radius:7px;background:#182229;color:#a3b1b9;font-size:10.5px;font-weight:500;letter-spacing:.05em;line-height:1.3;text-transform:uppercase}
+.upw-sec-zap__in,.upw-sec-zap__out,.upw-sec-zap__typing{position:relative;flex:none;align-self:flex-start;max-width:84%;margin-top:2px;padding:6px 8px 7px 9px;border-radius:9px;background:var(--upw-in);box-shadow:0 1px 1px #0003;font-size:13.5px;line-height:1.36;overflow-wrap:break-word;transform-origin:0 100%}
+.upw-sec-zap__out{align-self:flex-end;background:var(--upw-out);transform-origin:100% 100%}
+/* o "rabinho" do balão:só na primeira mensagem de cada sequência */
+.upw-sec-zap__in:not(.upw-sec-zap__in + .upw-sec-zap__in),.upw-sec-zap__out:not(.upw-sec-zap__out + .upw-sec-zap__out),.upw-sec-zap__typing{margin-top:8px;border-top-left-radius:0}
+.upw-sec-zap__out:not(.upw-sec-zap__out + .upw-sec-zap__out){border-radius:9px 0 9px 9px}
+.upw-sec-zap__in:not(.upw-sec-zap__in + .upw-sec-zap__in)::before,.upw-sec-zap__out:not(.upw-sec-zap__out + .upw-sec-zap__out)::before,.upw-sec-zap__typing::before{content:'';position:absolute;top:0;left:-7px;width:8px;height:12px;background:inherit;clip-path:polygon(0 0,100% 0,100% 100%)}
+.upw-sec-zap__out:not(.upw-sec-zap__out + .upw-sec-zap__out)::before{left:auto;right:-7px;clip-path:polygon(0 0,100% 0,0 100%)}
+.upw-sec-zap__t{position:relative;top:5px;float:right;margin-left:10px;color:#a3b1b9;font-size:10.5px;line-height:1.6;white-space:nowrap}
+.upw-sec-zap__out .upw-sec-zap__t{color:#e9edefcc}
+.upw-sec-zap__out .upw-sec-zap__t::after{content:'';display:inline-block;width:16px;height:10px;margin-left:3px;vertical-align:-1px;background:var(--upw-blue);-webkit-mask:var(--upw-tk2) center / contain no-repeat;transition:background-color .3s}
+.upw-sec-zap__out.is-got .upw-sec-zap__t::after{background:#e9edef9e}
+.upw-sec-zap__typing{display:flex;gap:4px;padding:12px 13px}
+.upw-sec-zap__typing i{width:6px;height:6px;border-radius:50%;background:#8696a0}
+/* áudio (a onda,o play e o avatar são criados pelo script) */
+.upw-sec-zap__audio{display:grid;grid-template-columns:22px minmax(0,1fr) 40px;align-items:center;column-gap:9px;width:84%;padding:7px 9px 6px 8px}
+.upw-sec-zap__play{position:relative;grid-area:1 / 1;height:26px;color:#aebac1}
+.upw-sec-zap__play::before{content:'';position:absolute;top:5px;left:3px;width:14px;height:16px;background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%)}
+.upw-sec-zap__audio.is-playing .upw-sec-zap__play::before{left:4px;width:4px;clip-path:none;box-shadow:7px 0 currentColor}
+.upw-sec-zap__wave{position:relative;grid-area:1 / 2;height:24px}
+.upw-sec-zap__wave::before,.upw-sec-zap__wave::after{content:'';position:absolute;inset:0;background:#e9edef4d;-webkit-mask:var(--upw-wv) 0 0 / 100% 100% no-repeat}
+.upw-sec-zap__wave::after{background:#e9edef;clip-path:inset(0 100% 0 0)}
+.upw-sec-zap__wave i{position:absolute;inset:0;translate:-100% 0}
+.upw-sec-zap__wave i::after{content:'';position:absolute;top:50%;right:-6px;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--upw-green);box-shadow:0 0 0 2px var(--upw-in)}
+.upw-sec-zap__audio.is-playing .upw-sec-zap__wave::after{animation:upw-zap-fill 2.4s linear forwards}
+.upw-sec-zap__audio.is-playing .upw-sec-zap__wave i{animation:upw-zap-head 2.4s linear forwards}
+.upw-sec-zap__audio.is-heard .upw-sec-zap__wave::after{clip-path:inset(0)}
+.upw-sec-zap__audio.is-heard .upw-sec-zap__wave i{translate:0 0}
+.upw-sec-zap__audio .upw-sec-zap__av{grid-area:1 / 3 / 3 / 4;align-self:start;width:40px;height:40px;font-size:13px}
+.upw-sec-zap__audio .upw-sec-zap__av::after{content:'';position:absolute;right:-4px;bottom:-3px;width:17px;height:17px;border-radius:50%;background:var(--upw-mic) center / 11px no-repeat,var(--upw-green);box-shadow:0 0 0 2px var(--upw-in);transition:background-color .4s}
+.upw-sec-zap__audio.is-heard .upw-sec-zap__av::after{background-color:var(--upw-blue)}
+.upw-sec-zap__dur{grid-area:2 / 1 / 3 / 3;margin-left:2px;color:#a3b1b9;font-size:10.5px;line-height:1.6}
+.upw-sec-zap__audio .upw-sec-zap__t{grid-area:2 / 2;justify-self:end;top:0;float:none}
+.upw-sec-zap__tr{display:block;grid-area:3 / 1 / 4 / 4;margin:6px 0 1px;padding-top:6px;border-top:1px solid #ffffff14;color:#d1d7db;font-size:12.5px;font-style:italic;line-height:1.4}
+/* cartão de resultado */
+.upw-sec-zap__win{width:84%;margin-bottom:14px;padding:4px 7px 7px}
+.upw-sec-zap__card{position:relative;display:block;overflow:hidden;margin:0 -3px 6px;padding:10px 12px 34px;border:1px solid #25d36638;border-radius:7px;background:linear-gradient(160deg,#25d36633,#25d36608 70%)}
+.upw-sec-zap__card::after{content:'';position:absolute;left:0;right:0;bottom:0;height:32px;background:var(--upw-spark) 0 0 / 100% 100% no-repeat}
+.upw-sec-zap .upw-sec-zap__card small{display:block;color:#86efac;font-size:10px;font-weight:600;letter-spacing:.08em;line-height:1.3;text-transform:uppercase}
+.upw-sec-zap .upw-sec-zap__card strong{display:inline-block;margin-top:3px;color:#fff;font-size:25px;font-weight:700;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.upw-sec-zap__re{position:absolute;left:10px;bottom:-16px;padding:1px 6px;border:2px solid var(--upw-chat);border-radius:12px;background:var(--upw-in);font-size:12px;line-height:1.35}
+
+/* ---------- entrada e animações ---------- */
+.upw-sec-zap__rv{transition:opacity .8s var(--upw-e) var(--upw-d,0s),translate .9s var(--upw-e) var(--upw-d,0s)}
+.upw-sec-zap .upw-sec-zap__h{--upw-d:.08s}
+.upw-sec-zap .upw-sec-zap__lead{--upw-d:.16s}
+.upw-sec-zap__foot{--upw-d:.6s}
+.upw-sec-zap.upw-js:not(.is-in) .upw-sec-zap__rv,.upw-sec-zap.upw-js:not(.is-in) .upw-sec-zap__c{opacity:0;translate:0 22px}
+.upw-sec-zap.upw-js:not(.is-in) .upw-sec-zap__phone{opacity:0;translate:0 50px;scale:.95}
+@media (prefers-reduced-motion:no-preference){.upw-sec-zap__eye i::after{animation:upw-zap-pulse 2s ease-out infinite}
+.upw-sec-zap__dots i,.upw-sec-zap__typing i{animation:upw-zap-dot 1.3s ease-in-out infinite}
+.upw-sec-zap__dots i:nth-child(2),.upw-sec-zap__typing i:nth-child(2){animation-delay:.15s}
+.upw-sec-zap__dots i:nth-child(3),.upw-sec-zap__typing i:nth-child(3){animation-delay:.3s}
+.upw-sec-zap.is-away .upw-sec-zap__eye i::after,.upw-sec-zap.is-away .upw-sec-zap__dots i{animation-play-state:paused}
+.upw-sec-zap.upw-js .upw-sec-zap__chat > .upw-sec-zap__in,.upw-sec-zap.upw-js .upw-sec-zap__chat > .upw-sec-zap__out,.upw-sec-zap.upw-js .upw-sec-zap__typing{animation:upw-zap-pop .42s cubic-bezier(.2,.9,.3,1.25) both}
+.upw-sec-zap.upw-js .upw-sec-zap__re{animation:upw-zap-react .45s .2s cubic-bezier(.3,1.6,.5,1) both}
+.upw-sec-zap.upw-js .upw-sec-zap__card::after{animation:upw-zap-draw 1s .15s cubic-bezier(.4,0,.2,1) both}
+}
+@media (prefers-reduced-motion:reduce){.upw-sec-zap .upw-sec-zap__rv,.upw-sec-zap .upw-sec-zap__c,.upw-sec-zap .upw-sec-zap__phone{translate:none !important;scale:none !important;transition:opacity .5s !important}
+}
+@keyframes upw-zap-pop{from{opacity:0;scale:.8;translate:0 12px}
+}
+@keyframes upw-zap-react{from{opacity:0;scale:0} 60%{scale:1.25}
+}
+@keyframes upw-zap-draw{from{clip-path:inset(0 100% 0 0)}
+}
+@keyframes upw-zap-fill{to{clip-path:inset(0)}
+}
+@keyframes upw-zap-head{to{translate:0 0}
+}
+@keyframes upw-zap-dot{0%,60%,100%{translate:0 0;opacity:.45} 30%{translate:0 -45%;opacity:1}
+}
+@keyframes upw-zap-pulse{from{opacity:.7} to{opacity:0;scale:3.4}
+}
+@keyframes upw-zap-count{to{stroke-dashoffset:0}
+}
+</style>
+<section class="upw-sec-zap" data-hold="6" data-speed="1" aria-label="Depoimentos de alunos">
+  <div class="upw-sec-zap__wrap">
+    <div class="upw-sec-zap__copy">
+      <p class="upw-sec-zap__eye upw-sec-zap__rv"><i aria-hidden="true"></i>Quem já entrou</p>
+      <h2 class="upw-sec-zap__h upw-sec-zap__rv">Olha o que os alunos estão <em>mandando</em><span class="upw-sec-zap__dots" aria-hidden="true"><i></i><i></i><i></i></span></h2>
+      <p class="upw-sec-zap__lead upw-sec-zap__rv">Todo dia chega mensagem assim no nosso WhatsApp. Toque numa conversa e veja com os próprios olhos.</p>
+
+      <!-- 1) LISTA: um botão por pessoa (avatar, nome, horário, prévia, não lidas), na mesma ordem das conversas -->
+      <div class="upw-sec-zap__list">
+        <button class="upw-sec-zap__c" type="button"><span class="upw-sec-zap__av">JP</span><span class="upw-sec-zap__n">Juliana Prado</span>
+          <span class="upw-sec-zap__tm">09:16</span><span class="upw-sec-zap__p">Fechei 3 clientes na primeira semana 😭</span><span class="upw-sec-zap__b">3</span></button>
+        <button class="upw-sec-zap__c" type="button"><span class="upw-sec-zap__av">RM</span><span class="upw-sec-zap__n">Rafael Mendes</span>
+          <span class="upw-sec-zap__tm">08:47</span><span class="upw-sec-zap__p">FECHOU!! 🎯 E sem pedir desconto</span><span class="upw-sec-zap__b">3</span></button>
+        <button class="upw-sec-zap__c" type="button"><span class="upw-sec-zap__av">CT</span><span class="upw-sec-zap__n">Camila Torres</span>
+          <span class="upw-sec-zap__tm">ontem</span><span class="upw-sec-zap__p">🎤 Mensagem de voz (0:17)</span><span class="upw-sec-zap__b">3</span></button>
+        <button class="upw-sec-zap__c" type="button"><span class="upw-sec-zap__av">PN</span><span class="upw-sec-zap__n">Patrícia Nunes</span>
+          <span class="upw-sec-zap__tm">seg.</span><span class="upw-sec-zap__p">Primeiro lançamento da minha vida!! 😭</span><span class="upw-sec-zap__b">2</span></button>
+      </div>
+
+      <div class="upw-sec-zap__foot upw-sec-zap__rv">
+        <p class="upw-sec-zap__proof"><span><b>4,9</b> <span class="upw-sec-zap__stars" role="img" aria-label="de 5 estrelas">★★★★★</span><br>+2.300 alunos aprovaram</span></p>
+        <button class="upw-sec-zap__pause" type="button" hidden><span class="upw-sec-zap__ico" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="16"/><circle cx="18" cy="18" r="16"/></svg></span><span class="upw-sec-zap__bt">Pausar conversas</span></button>
+      </div>
+    </div>
+
+    <div class="upw-sec-zap__stage">
+      <span class="upw-sec-zap__ping" aria-hidden="true"></span>
+      <div class="upw-sec-zap__phone">
+        <div class="upw-sec-zap__scr">
+          <div class="upw-sec-zap__top">
+            <div class="upw-sec-zap__sb" aria-hidden="true">9:41<svg viewBox="0 0 50 12"><path d="M0 8.5h3v3H0zM4.5 6h3v5.5h-3zM9 3.5h3v8H9zM13.5 1h3v10.5h-3zM28 2.5h15a1.6 1.6 0 0 1 1.6 1.6v3.8A1.6 1.6 0 0 1 43 9.5H28a1.6 1.6 0 0 1-1.6-1.6V4.1A1.6 1.6 0 0 1 28 2.5zM48.6 4v4a2 2 0 0 0 0-4z"/><rect x="25" y=".5" width="22" height="11" rx="3.3" fill="none" stroke="currentColor" opacity=".45"/></svg></div>
+            <div class="upw-sec-zap__hd">
+              <svg class="upw-sec-zap__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+              <span class="upw-sec-zap__av" aria-hidden="true">JP</span>
+              <p class="upw-sec-zap__who"><b>Juliana Prado</b><small>online</small></p>
+              <svg class="upw-sec-zap__ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5 21 7v10l-5.5-3.5"/></svg>
+              <svg class="upw-sec-zap__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 3.6 6.3 3.5A2.4 2.4 0 0 0 3.8 6c.3 7.6 6.6 13.9 14.2 14.2a2.4 2.4 0 0 0 2.5-2.5l-.1-2.1-4.3-1.5-2.1 2a11 11 0 0 1-6-6l2-2.1z"/></svg>
+            </div>
+          </div>
+          <div class="upw-sec-zap__body">
+    <!-- 2) CONVERSAS: uma por pessoa, na mesma ordem da lista. __in = aluno, __out = você -->
+    <div class="upw-sec-zap__chat">
+      <span class="upw-sec-zap__day">Hoje</span>
+      <div class="upw-sec-zap__out">E aí, Ju! Como foi o primeiro mês aplicando o método? <span class="upw-sec-zap__t">09:12</span></div>
+      <div class="upw-sec-zap__in">Gente, ainda tô em choque 😭 Fechei 3 clientes na primeira semana usando o roteiro da aula 4 <span class="upw-sec-zap__t">09:14</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__audio"><span class="upw-sec-zap__dur">0:23</span><span class="upw-sec-zap__t">09:14</span>
+        <span class="upw-sec-zap__tr">“Eu travava na hora de falar de preço. Agora mando a proposta sem medo nenhum.”</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__win"><span class="upw-sec-zap__card"><small>Faturamento em 30 dias</small><strong>R$ 7.420</strong></span>
+        🚀 Mais do que no ano passado inteiro <span class="upw-sec-zap__t">09:15</span><span class="upw-sec-zap__re">🔥</span></div>
+      <div class="upw-sec-zap__out">Isso é só o começo! 💚 <span class="upw-sec-zap__t">09:16</span></div>
+    </div>
+    <div class="upw-sec-zap__chat">
+      <span class="upw-sec-zap__day">Hoje</span>
+      <div class="upw-sec-zap__out">Rafa, e o cliente da clínica? Fechou? <span class="upw-sec-zap__t">08:40</span></div>
+      <div class="upw-sec-zap__in">FECHOU!! 🎯 Mandei a proposta do jeitinho que vocês ensinaram e ele aceitou sem pedir desconto <span class="upw-sec-zap__t">08:44</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__win"><span class="upw-sec-zap__card"><small>Contrato mensal</small><strong>R$ 2.800/mês</strong></span>
+        Meu primeiro cliente recorrente 🙌 <span class="upw-sec-zap__t">08:45</span><span class="upw-sec-zap__re">👏</span></div>
+      <div class="upw-sec-zap__in">E já tenho mais 2 reuniões marcadas pra semana que vem <span class="upw-sec-zap__t">08:46</span></div>
+      <div class="upw-sec-zap__out">Bora pra cima! 🚀 <span class="upw-sec-zap__t">08:47</span></div>
+    </div>
+    <div class="upw-sec-zap__chat">
+      <span class="upw-sec-zap__day">Ontem</span>
+      <div class="upw-sec-zap__out">Cami, e as encomendas de fim de ano? <span class="upw-sec-zap__t">18:02</span></div>
+      <div class="upw-sec-zap__in">Amiga, olha isso 😳 <span class="upw-sec-zap__t">18:05</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__win"><span class="upw-sec-zap__card"><small>Pedidos em novembro</small><strong>+148</strong></span>
+        🍰 Agenda fechada até o Natal <span class="upw-sec-zap__t">18:05</span><span class="upw-sec-zap__re">😍</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__audio"><span class="upw-sec-zap__dur">0:17</span><span class="upw-sec-zap__t">18:06</span>
+        <span class="upw-sec-zap__tr">“Antes eu dependia de indicação. Agora o Instagram vende sozinho.”</span></div>
+      <div class="upw-sec-zap__out">Que orgulho de você! 💚 <span class="upw-sec-zap__t">18:10</span></div>
+    </div>
+    <div class="upw-sec-zap__chat">
+      <span class="upw-sec-zap__day">Segunda-feira</span>
+      <div class="upw-sec-zap__out">Paty, como foi o lançamento? <span class="upw-sec-zap__t">21:15</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__audio"><span class="upw-sec-zap__dur">0:31</span><span class="upw-sec-zap__t">21:18</span>
+        <span class="upw-sec-zap__tr">“Eu chorei vendo as vendas caindo no celular. Primeiro lançamento da minha vida!”</span></div>
+      <div class="upw-sec-zap__in upw-sec-zap__win"><span class="upw-sec-zap__card"><small>Lançamento de 7 dias</small><strong>R$ 41.380</strong></span>
+        💸 Com uma lista de 900 pessoas <span class="upw-sec-zap__t">21:19</span><span class="upw-sec-zap__re">💚</span></div>
+      <div class="upw-sec-zap__out">MERECIDO demais! 👏 <span class="upw-sec-zap__t">21:20</span></div>
+    </div>
+  </div>
+  <div class="upw-sec-zap__bot" aria-hidden="true"><svg class="upw-sec-zap__ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Mensagem</span><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function () {
+  // textos que aparecem na tela (troque se quiser)
+  var TXT = { online: 'online', typing: 'digitando…', rec: 'gravando áudio…', voice: '🎤 Mensagem de voz', pause: 'Pausar conversas', play: 'Retomar conversas' };
+  var P = 'upw-sec-zap__', still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(el, c) { return el.querySelector('.' + P + c); }
+  function $$(el, c) { return [].slice.call(el.querySelectorAll('.' + P + c)); }
+  function has(el, c) { return el.classList.contains(P + c); }
+  function cl(el, c, on) { el.classList.toggle(c, !!on); }
+  function anim(el, kf, ms, end) {
+    if (still || !el.animate) return end && end();
+    el.animate(kf, { duration: ms, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = end || null;
+  }
+  document.querySelectorAll('.upw-sec-zap').forEach(function (root) {
+  if (root.dataset.upwOn) return;
+  root.dataset.upwOn = '1';
+  var tabs = $$(root, 'c'), chats = $$(root, 'chat'), n = Math.min(tabs.length, chats.length);
+  if (!n) return;
+  var id = 'upw-zap-' + Math.random().toString(36).slice(2, 8), list = $(root, 'list'), phone = $(root, 'phone'), scr = $(root, 'scr');
+  var who = $(root, 'who'), stat = who.querySelector('small'), btn = $(root, 'pause'), typing = document.createElement('div');
+  var speed = +root.getAttribute('data-speed') || 1, hold = parseFloat(root.getAttribute('data-hold'));
+  var cur = 0, gen = 0, T = [], msgs = [], prevs = [], auto, playing, done, hov, foc, seen, began, holding, holdT, left, since;
+  if (isNaN(hold)) hold = 6;
+  typing.className = P + 'typing is-off';
+  typing.setAttribute('aria-hidden', 'true');
+  typing.innerHTML = '<i></i><i></i><i></i>';
+  root.classList.add('upw-js');
+  root.style.setProperty('--upw-hold', hold + 's');
+  list.setAttribute('role', 'tablist');
+  list.setAttribute('aria-label', 'Conversas');
+  scr.id = id;
+  scr.setAttribute('role', 'tabpanel');
+  scr.tabIndex = 0;
+
+  tabs.forEach(function (t, k) {
+    if (k >= n) return t.hidden = true;
+    var c = chats[k], av = $(t, 'av').innerHTML;
+    t.id = id + k;
+    t.setAttribute('role', 'tab');
+    t.setAttribute('aria-controls', id);
+    t.style.setProperty('--upw-i', k);
+    ['av', 'tm', 'b'].forEach(function (x) { if ($(t, x)) $(t, x).setAttribute('aria-hidden', 'true'); });
+    c.style.setProperty('--upw-av', getComputedStyle(t).getPropertyValue('--upw-av'));
+    $$(c, 'audio').forEach(function (a) {
+      a.insertAdjacentHTML('afterbegin', '<span class="' + P + 'play"></span><span class="' + P + 'wave"><i></i></span><span class="' + P + 'av" aria-hidden="true">' + av + '</span>');
+    });
+    $$(c, 'card').forEach(function (s) { s = s.querySelector('strong'); s.setAttribute('data-upw-v', s.textContent); });
+    msgs[k] = [].filter.call(c.children, function (m) { return has(m, 'in') || has(m, 'out'); });
+    prevs[k] = msgs[k].map(function (m) {
+      if (has(m, 'audio')) return TXT.voice + ' (' + $(m, 'dur').textContent.trim() + ')';
+      var s = '';
+      [].forEach.call(m.childNodes, function (x) {
+        if (x.nodeType == 3) s += x.textContent;
+        else if (!/__(t|re)\b/.test(x.className)) s += ' ' + (has(x, 'card') ? x.querySelector('strong') : x).textContent + ' ';
+      });
+      return s.replace(/\s+/g, ' ').trim();
+    });
+    t.addEventListener('click', function () { select(k, 1); });
+  });
+
+  function at(ms, fn) { T.push(setTimeout(fn, ms / speed)); }
+  function status(s, hot) { stat.textContent = s; cl(stat, 'is-hot', hot); }
+  function note(s, mine) { var p = $(tabs[cur], 'p'); p.textContent = s; cl(p, 'is-mine', mine); }
+  // mostra/esconde algo na conversa: tudo (inclusive o que chegou) sobe junto, como no app
+  function change(mut) {
+    var kids = chats[cur].children, old = [].filter.call(kids, function (el) { return el.offsetParent; }), ref = old[0], y, d, x;
+    if (still || !ref || !window.DOMMatrix) return mut();
+    y = ref.getBoundingClientRect().top;
+    x = new DOMMatrix(getComputedStyle(ref).transform).m42; // o quanto a pilha ainda está subindo: o que chega entra junto
+    mut();
+    d = y - ref.getBoundingClientRect().top;
+    [].forEach.call(kids, function (el) {
+      var o = old.indexOf(el) < 0 ? d + x : d;
+      if (el.offsetParent && el.animate && Math.abs(o) > 1) el.animate([{ transform: 'translateY(' + o + 'px)' }, { transform: 'none' }], { duration: 380, easing: 'cubic-bezier(.2,.8,.2,1)', composite: 'add' });
+    });
+  }
+  function typingOn(rec) {
+    var s = rec ? TXT.rec : TXT.typing;
+    status(s, 1); note(s);
+    tabs[cur].classList.add('is-typing');
+    typing.classList.remove('is-off');
+  }
+  // o número do cartão sobe do zero até o valor escrito
+  function count(s) {
+    var f = s.getAttribute('data-upw-v'), m = f.match(/^(\D*)(\d[\d.]*(?:,\d+)?)([\s\S]*)$/), g = gen, t0;
+    if (!m) return;
+    var dec = (m[2].split(',')[1] || '').length, v = parseFloat(m[2].replace(/\./g, '').replace(',', '.'));
+    s.style.minWidth = s.offsetWidth + 'px';
+    requestAnimationFrame(function step(now) {
+      if (g != gen) return;
+      var p = Math.min(1, (now - (t0 = t0 || now)) / 650);
+      s.textContent = p < 1 ? m[1] + (v * (1 - Math.pow(1 - p, 3))).toLocaleString('pt-BR', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + m[3] : f;
+      if (p < 1) requestAnimationFrame(step);
+    });
+  }
+  // chegou mensagem do aluno: anel de luz, o celular vibra, o áudio toca, o número sobe
+  function arrive(m, j) {
+    note(prevs[cur][j]);
+    anim($(root, 'ping'), [{ opacity: .8, transform: 'scale(.6)' }, { opacity: 0, transform: 'scale(1.4)' }], 1300);
+    anim(phone, [{ rotate: '0deg' }, { rotate: '-1deg' }, { rotate: '.8deg' }, { rotate: '0deg' }], 300);
+    if (has(m, 'audio')) {
+      m.classList.add('is-playing');
+      T.push(setTimeout(function () { m.classList.replace('is-playing', 'is-heard'); }, 2400));
+    }
+    if ($(m, 'card')) count($(m, 'card').querySelector('strong'));
+  }
+  // volta a conversa ao começo: só as suas primeiras mensagens ficam (com tique cinza)
+  function reset(i) {
+    var lead = 1;
+    chats[i].appendChild(typing);
+    typing.classList.add('is-off');
+    msgs[i].forEach(function (m) {
+      var s = $(m, 'card');
+      lead = lead && has(m, 'out');
+      cl(m, 'is-off', !lead);
+      m.classList.remove('is-playing', 'is-heard');
+      cl(m, 'is-got', has(m, 'out'));
+      if (s) { s = s.querySelector('strong'); s.textContent = s.getAttribute('data-upw-v'); s.style.minWidth = ''; }
+    });
+  }
+  // toca a conversa i: digitando…, mensagens uma a uma, tiques azuis
+  function play(i) {
+    T.forEach(clearTimeout);
+    T = []; gen++; holdCancel(); reset(i);
+    playing = 1; done = 0;
+    var ms = msgs[i], k = 0, t = 220, z = ms.length - 1;
+    tabs[i].classList.add('is-read');
+    tabs[i].classList.remove('is-typing');
+    status(TXT.online);
+    if (still) {
+      ms.forEach(function (m) { m.classList.remove('is-off', 'is-got'); m.classList.add('is-heard'); });
+      if (z >= 0) note(prevs[i][z], has(ms[z], 'out'));
+      return finish();
+    }
+    for (; k <= z && has(ms[k], 'out'); k++);
+    var old = ms.slice(0, k);
+    at(t, function () { old.forEach(function (m) { m.classList.remove('is-got'); }); });
+    t += 140;
+    ms.slice(k).forEach(function (m) {
+      var j = ms.indexOf(m), rec = has(m, 'audio');
+      if (has(m, 'in')) {
+        at(t, function () { change(function () { typingOn(rec); }); });
+        t += rec ? 500 : $(m, 'card') ? 480 : Math.max(360, Math.min(650, 180 + prevs[i][j].length * 4.5));
+        at(t, function () {
+          change(function () { typing.classList.add('is-off'); tabs[cur].classList.remove('is-typing'); status(TXT.online); m.classList.remove('is-off'); });
+          arrive(m, j);
+        });
+        t += 180;
+      } else {
+        at(t += 320, function () { change(function () { m.classList.remove('is-off'); }); note(prevs[i][j], 1); });
+        at(t += 620, function () { m.classList.remove('is-got'); });
+      }
+    });
+    at(t + 200, finish);
+  }
+  function finish() { playing = 0; done = 1; holdStart(); }
+
+  // how: 0 = início, 1 = a pessoa escolheu, 2 = troca automática
+  function select(i, how) {
+    if (how == 1) setAuto(0);
+    if (i == cur && how) return playing || play(i);
+    var a = chats[cur], b = chats[i], dir = i > cur ? 1 : -1, t = tabs[i], z = msgs[cur].length - 1;
+    if (playing && z >= 0) { tabs[cur].classList.remove('is-typing'); note(prevs[cur][z], has(msgs[cur][z], 'out')); }
+    cur = i;
+    tabs.forEach(function (x, k) { x.setAttribute('aria-selected', k == i); x.tabIndex = k == i ? 0 : -1; cl(x, 'is-cur', k == i); });
+    scr.setAttribute('aria-labelledby', t.id);
+    $(scr, 'hd .' + P + 'av').innerHTML = $(t, 'av').innerHTML;
+    who.querySelector('b').textContent = $(t, 'n').textContent;
+    phone.style.setProperty('--upw-av', b.style.getPropertyValue('--upw-av'));
+    chats.forEach(function (c) {
+      if (c.getAnimations) c.getAnimations().forEach(function (x) { x.cancel(); });
+      c.classList.remove('is-prev');
+      cl(c, 'is-cur', c == b);
+      c.setAttribute('aria-hidden', c != b);
+    });
+    if (how && a != b) {
+      a.classList.add('is-prev');
+      anim(a, [{ translate: '0 0', opacity: 1 }, { translate: -30 * dir + '% 0', opacity: .3 }], 560, function () { a.classList.remove('is-prev'); });
+      anim(b, [{ translate: 100 * dir + '% 0' }, { translate: '0 0' }], 560);
+      anim(who, [{ opacity: 0, transform: 'translateX(' + 12 * dir + 'px)' }, { opacity: 1, transform: 'none' }], 420);
+    }
+    if (how && list.scrollWidth > list.clientWidth + 4) list.scrollTo({ left: t.offsetLeft - (list.clientWidth - t.offsetWidth) / 2, behavior: 'smooth' });
+    how ? play(i) : reset(i);
+  }
+
+  // troca automática: espera data-hold segundos (pausa com o mouse em cima, com foco, fora da tela ou com a aba escondida)
+  function holdStart() {
+    if (!auto) return;
+    holding = 1; left = hold * 1000;
+    root.classList.remove('is-count');
+    void root.offsetWidth;
+    root.classList.add('is-count');
+    sync();
+  }
+  function holdCancel() { holding = 0; clearTimeout(holdT); holdT = 0; root.classList.remove('is-count', 'is-wait'); }
+  function sync() {
+    var block = hov || foc || !seen || document.hidden;
+    if (holdT) { clearTimeout(holdT); holdT = 0; left -= Date.now() - since; }
+    if (holding) cl(root, 'is-wait', block);
+    if (holding && !block) { since = Date.now(); holdT = setTimeout(function () { holdCancel(); select((cur + 1) % n, 2); }, Math.max(0, left)); }
+    cl(root, 'is-away', !seen);
+  }
+  function setAuto(on) {
+    auto = on && !still && hold > 0;
+    $(btn, 'bt').textContent = auto ? TXT.pause : TXT.play;
+    cl(btn, 'is-paused', !auto);
+    $(root, 'body').setAttribute('aria-live', auto ? 'off' : 'polite');
+    auto ? done && holdStart() : holdCancel();
+    sync();
+  }
+
+  btn.hidden = still || hold <= 0;
+  btn.addEventListener('click', function () { setAuto(!auto); });
+  list.addEventListener('keydown', function (e) {
+    var i = tabs.indexOf(document.activeElement), d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    var j = e.key == 'Home' ? 0 : e.key == 'End' ? n - 1 : d ? (i + d + n) % n : -1;
+    if (i < 0 || i >= n || j < 0) return;
+    e.preventDefault();
+    tabs[j].focus();
+    select(j, 1);
+  });
+  [list, phone].forEach(function (el) {
+    el.addEventListener('pointerenter', function (e) { if (e.pointerType == 'mouse') { hov = 1; sync(); } }, { passive: true });
+    el.addEventListener('pointerleave', function (e) { if (e.pointerType == 'mouse') { hov = 0; sync(); } }, { passive: true });
+  });
+  root.addEventListener('focusin', function (e) { foc = e.target != btn; sync(); });
+  root.addEventListener('focusout', function (e) { var r = e.relatedTarget; foc = r && r != btn && root.contains(r); sync(); });
+  document.addEventListener('visibilitychange', sync);
+  root.upwGo = function (i) { if (auto && i < n) select(i, 2); };
+
+  setAuto(1);
+  select(0, 0);
+  function start() { if (!began) { began = 1; T.push(setTimeout(function () { if (!playing && !done) play(cur); }, still ? 0 : 150)); } }
+  if (!window.IntersectionObserver) { seen = 1; root.classList.add('is-in'); return start(); }
+  new IntersectionObserver(function (en) {
+    seen = en[en.length - 1].isIntersecting;
+    if (seen) root.classList.add('is-in');
+    sync();
+  }, { threshold: .12 }).observe(root);
+  new IntersectionObserver(function (en, ob) { if (en[en.length - 1].isIntersecting) { ob.disconnect(); start(); } }, { threshold: .4 }).observe(phone);
+  });
+})();
+</script>
+<!-- ===== ATÉ AQUI ===== -->
+
+<script>
+  // Só para a prévia: aos 5,8 s passa para a 2ª conversa (como a troca automática faz depois de alguns segundos),
+  // para o vídeo mostrar a transição. Não precisa copiar.
+  (function () {
+    var r = document.querySelector('.upw-sec-zap');
+    setTimeout(function () { if (r && r.upwGo) r.upwGo(1); }, 5800);
+  })();
+</script>
+</body>
+</html>
